@@ -10,37 +10,36 @@
 	#endif
 #endif
 
-class Bureaucrat {
+class Bureaucrat;
+
+class Form {
   private:
 	const std::string 	_name;
-	int					_grade;
-	char				*_allocatedData;
+	bool				_signed;
+	const int			_minSignGrade;
+	const int			_minExecGrade;
 
 	static int			_highestGrade;
 	static int			_lowestGrade;
-	static int			_defaultGrade;
 
-	void				_allocateStuff();
 	bool				_gradeTooHigh(int grade) const;
 	bool				_gradeTooLow(int grade) const;
 	void				_checkGrade(int grade) const;
 
   public:
-	Bureaucrat();
-	Bureaucrat(const std::string& name, int grade);
-	Bureaucrat(const Bureaucrat& other);
-	~Bureaucrat();
+	Form();
+	Form(const std::string& name, int minSignGrade, int minExecGrade);
+	Form(const Form& other);
+	~Form();
 
-	Bureaucrat& operator=(const Bureaucrat& rHs);
+	Form& operator=(const Form& rHs);
 
 	const std::string&	getName() const;
-	int					getGrade() const;
-	char*				getAllocatedData() const;
+	bool				getSigned() const;
+	int					getMinSignGrade() const;
+	int					getMinExecGrade() const;
 
-	void				setAllocatedData(char c);
-
-	void				incrementGrade();
-	void				decrementGrade();
+	void				beSigned(const Bureaucrat& signer);
 
 	class GradeTooHighException : public std::exception {
 	  public:
@@ -53,4 +52,4 @@ class Bureaucrat {
 	};
 };
 
-std::ostream& operator<<(std::ostream& lHs, const Bureaucrat& rHs);
+std::ostream& operator<<(std::ostream& lHs, const Form& rHs);

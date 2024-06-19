@@ -1,5 +1,6 @@
 #include "Bureaucrat.hpp"
 #include <iostream>
+#include "AForm.hpp"
 
 std::ostream& operator<<(std::ostream& lHs, const Bureaucrat& rHs) {
 	lHs << rHs.getName() << "(grade: " << rHs.getGrade() << ")";
@@ -93,6 +94,29 @@ void	Bureaucrat::decrementGrade() {
 	_checkGrade(_grade + 1);
 	VERBOSE_OUT(*this << ": decrementing grade...");
 	_grade++;
+}
+
+void	Bureaucrat::signForm(AForm& form) {
+	try {
+		form.beSigned(*this);
+		std::cout << *this << " signed " << form << std::endl;
+	}
+	catch (const AForm::GradeTooLowException& e) {
+		std::cerr << *this << " couldn't sign " << form << "because " << e.what() << std::endl;
+	}
+}
+
+void	Bureaucrat::executeForm(const AForm& form) {
+	try {
+		form.execute(*this);
+		std::cout << *this << " executed " << form << std::endl;
+	}
+	catch (const AForm::CannotExecuteLowException& e) {
+		std::cerr << *this << " couldn't execute " << form << "because " << e.what() << std::endl;
+	}
+	catch (const AForm::CannotExecuteUnsignedException& e) {
+		std::cerr << *this << " couldn't execute " << form << "because " << e.what() << std::endl;
+	}
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {

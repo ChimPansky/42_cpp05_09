@@ -10,6 +10,8 @@
 	#endif
 #endif
 
+class Form;
+
 class Bureaucrat {
   private:
 	const std::string 	_name;
@@ -35,12 +37,14 @@ class Bureaucrat {
 
 	const std::string&	getName() const;
 	int					getGrade() const;
-	char*				getAllocatedData() const;
 
+	char*				getAllocatedData() const;
 	void				setAllocatedData(char c);
 
 	void				incrementGrade();
 	void				decrementGrade();
+
+	void				signForm(Form& form);
 
 	class GradeTooHighException : public std::exception {
 	  public:
