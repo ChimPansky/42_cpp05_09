@@ -2,7 +2,7 @@
 #include <iostream>
 
 std::ostream& operator<<(std::ostream& lHs, const Bureaucrat& rHs) {
-	lHs << rHs.getName() << "(grade: " << rHs.getGrade() << ")";
+	lHs << "Bureaucrat " << rHs.getName() << "(grade: " << rHs.getGrade() << ")";
 	return (lHs);
 }
 

@@ -13,7 +13,7 @@
 
 class AForm;
 
-class ShrubberyCreationForm : public AForm {
+class RobotomyRequestForm : public AForm {
   private:
 	const std::string	_target;
 
@@ -24,12 +24,12 @@ class ShrubberyCreationForm : public AForm {
 	static const std::string	_asciiTree;
 
   public:
-	ShrubberyCreationForm();
-	ShrubberyCreationForm(const std::string& target);
-	ShrubberyCreationForm(const ShrubberyCreationForm& other);
-	~ShrubberyCreationForm();
+	RobotomyRequestForm();
+	RobotomyRequestForm(const std::string& target);
+	RobotomyRequestForm(const RobotomyRequestForm& other);
+	~RobotomyRequestForm();
 
-	ShrubberyCreationForm& operator=(const ShrubberyCreationForm& rHs);
+	RobotomyRequestForm& operator=(const RobotomyRequestForm& rHs);
 
 	const std::string&	getTarget() const;
 	void				action() const;
@@ -40,4 +40,4 @@ class ShrubberyCreationForm : public AForm {
 	};
 };
 
-std::ostream& operator<<(std::ostream& lHs, const ShrubberyCreationForm& rHs);
+std::ostream& operator<<(std::ostream& lHs, const RobotomyRequestForm& rHs);

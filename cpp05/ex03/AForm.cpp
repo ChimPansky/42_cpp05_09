@@ -3,7 +3,7 @@
 #include <iostream>
 
 std::ostream& operator<<(std::ostream& lHs, const AForm& rHs) {
-	lHs << "Form " << rHs.getName() << " (signed: " << (rHs.getSigned() ? "YES" : "NO")
+	lHs << "Form " <<  rHs.getName() << " (signed: " << (rHs.getSigned() ? "YES" : "NO")
 		<< "; Sign req: " << rHs.getMinSignGrade() << "; Exec req: "
 		<< rHs.getMinExecGrade() << ")";
 	return (lHs);

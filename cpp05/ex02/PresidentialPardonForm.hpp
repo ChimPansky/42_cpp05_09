@@ -13,7 +13,7 @@
 
 class AForm;
 
-class ShrubberyCreationForm : public AForm {
+class PresidentialPardonForm : public AForm {
   private:
 	const std::string	_target;
 
@@ -24,20 +24,15 @@ class ShrubberyCreationForm : public AForm {
 	static const std::string	_asciiTree;
 
   public:
-	ShrubberyCreationForm();
-	ShrubberyCreationForm(const std::string& target);
-	ShrubberyCreationForm(const ShrubberyCreationForm& other);
-	~ShrubberyCreationForm();
+	PresidentialPardonForm();
+	PresidentialPardonForm(const std::string& target);
+	PresidentialPardonForm(const PresidentialPardonForm& other);
+	~PresidentialPardonForm();
 
-	ShrubberyCreationForm& operator=(const ShrubberyCreationForm& rHs);
+	PresidentialPardonForm& operator=(const PresidentialPardonForm& rHs);
 
 	const std::string&	getTarget() const;
 	void				action() const;
-
-	class ExecuteException : public std::exception {
-	  public:
-		const char* what() const throw();
-	};
 };
 
-std::ostream& operator<<(std::ostream& lHs, const ShrubberyCreationForm& rHs);
+std::ostream& operator<<(std::ostream& lHs, const PresidentialPardonForm& rHs);

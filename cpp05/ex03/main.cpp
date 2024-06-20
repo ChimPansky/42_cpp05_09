@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Intern.hpp"
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
@@ -10,13 +11,14 @@ int main() {
 	Bureaucrat	moe("Moe", 100);
 	Bureaucrat	lou("Lou", 140);
 	Bureaucrat	joe("Joe", 150);
+	Intern	randomIntern;
 	AForm*	randomForm = 0;
 
 	std::cout << "\n---1---\n";
 	randomForm = 0;
 	try {
-		randomForm = new ShrubberyCreationForm("home");
-		joe.signForm(*randomForm);
+		randomForm = randomIntern.makeForm("wrong form type", "Ron Weasley");
+		bob.signForm(*randomForm);
 		bob.executeForm(*randomForm);
 		delete randomForm;
 	}
@@ -28,9 +30,9 @@ int main() {
 	std::cout << "\n---2---\n";
 	randomForm = 0;
 	try {
-		randomForm = new ShrubberyCreationForm("home");
-		lou.signForm(*randomForm);
-		lou.executeForm(*randomForm);
+		randomForm = randomIntern.makeForm("shrubbery creation", "home");
+		joe.signForm(*randomForm);
+		bob.executeForm(*randomForm);
 		delete randomForm;
 	}
 	catch (const std::exception& e) {
@@ -41,7 +43,7 @@ int main() {
 	std::cout << "\n---3---\n";
 	randomForm = 0;
 	try {
-		randomForm = new ShrubberyCreationForm("home");
+		randomForm = randomIntern.makeForm("sshrubbery creation", "home");
 		lou.signForm(*randomForm);
 		bob.executeForm(*randomForm);
 		delete randomForm;
@@ -54,7 +56,7 @@ int main() {
 	std::cout << "\n---4---\n";
 	randomForm = 0;
 	try {
-		randomForm = new RobotomyRequestForm("Ron Weasley");
+		randomForm = randomIntern.makeForm("shrubbery creation", "home");
 		lou.signForm(*randomForm);
 		bob.executeForm(*randomForm);
 		delete randomForm;
@@ -67,9 +69,9 @@ int main() {
 	std::cout << "\n---5---\n";
 	randomForm = 0;
 	try {
-		randomForm = new RobotomyRequestForm("Ron Weasley");
-		moe.signForm(*randomForm);
-		lou.executeForm(*randomForm);
+		randomForm = randomIntern.makeForm("robotomy request", "Ron Weasley");
+		lou.signForm(*randomForm);
+		bob.executeForm(*randomForm);
 		delete randomForm;
 	}
 	catch (const std::exception& e) {
@@ -80,8 +82,8 @@ int main() {
 	std::cout << "\n---6---\n";
 	randomForm = 0;
 	try {
-		randomForm = new RobotomyRequestForm("Ron Weasley");
-		edd.signForm(*randomForm);
+		randomForm = randomIntern.makeForm("robotomy request", "Ron Weasley");
+		moe.signForm(*randomForm);
 		lou.executeForm(*randomForm);
 		delete randomForm;
 	}
@@ -93,9 +95,9 @@ int main() {
 	std::cout << "\n---7---\n";
 	randomForm = 0;
 	try {
-		randomForm = new RobotomyRequestForm("Ron Weasley");
+		randomForm = randomIntern.makeForm("robotomy request", "Ron Weasley");
 		edd.signForm(*randomForm);
-		edd.executeForm(*randomForm);
+		lou.executeForm(*randomForm);
 		delete randomForm;
 	}
 	catch (const std::exception& e) {
@@ -106,7 +108,7 @@ int main() {
 	std::cout << "\n---8---\n";
 	randomForm = 0;
 	try {
-		randomForm = new PresidentialPardonForm("Donald Trump");
+		randomForm = randomIntern.makeForm("robotomy request", "Ron Weasley");
 		edd.signForm(*randomForm);
 		edd.executeForm(*randomForm);
 		delete randomForm;
@@ -119,7 +121,20 @@ int main() {
 	std::cout << "\n---9---\n";
 	randomForm = 0;
 	try {
-		randomForm = new PresidentialPardonForm("Donald Trump");
+		randomForm = randomIntern.makeForm("presidential pardon", "Donald Trump");
+		edd.signForm(*randomForm);
+		edd.executeForm(*randomForm);
+		delete randomForm;
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what() << std::endl;
+		delete randomForm;
+	}
+
+	std::cout << "\n---10---\n";
+	randomForm = 0;
+	try {
+		randomForm = randomIntern.makeForm("presidential pardon", "Donald Trump");
 		bob.signForm(*randomForm);
 		bob.executeForm(*randomForm);
 		delete randomForm;

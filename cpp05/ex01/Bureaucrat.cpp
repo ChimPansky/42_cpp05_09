@@ -3,7 +3,7 @@
 #include "Form.hpp"
 
 std::ostream& operator<<(std::ostream& lHs, const Bureaucrat& rHs) {
-	lHs << rHs.getName() << "(grade: " << rHs.getGrade() << ")";
+	lHs << "Bureaucrat " << rHs.getName() << "(grade: " << rHs.getGrade() << ")";
 	return (lHs);
 }
 
@@ -102,7 +102,7 @@ void	Bureaucrat::signForm(Form& form) {
 		std::cout << *this << " signed " << form << std::endl;
 	}
 	catch (const Form::GradeTooLowException& e) {
-		std::cerr << *this << " couldn't sign " << form << "because " << e.what() << std::endl;
+		std::cerr << *this << " couldn't sign " << form << " because " << e.what() << std::endl;
 	}
 }
 

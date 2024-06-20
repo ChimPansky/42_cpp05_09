@@ -2,13 +2,15 @@
 #include <string>
 
 #ifndef VERBOSE
-	#define VERBOSE 1
+	#define VERBOSE 0
 	#if VERBOSE
 	# define VERBOSE_OUT(msg) std::cout << msg << std::endl;
 	#else
 	# define VERBOSE_OUT(msg)
 	#endif
 #endif
+
+class AForm;
 
 class Bureaucrat {
   private:
@@ -35,12 +37,15 @@ class Bureaucrat {
 
 	const std::string&	getName() const;
 	int					getGrade() const;
-	char*				getAllocatedData() const;
 
+	char*				getAllocatedData() const;
 	void				setAllocatedData(char c);
 
 	void				incrementGrade();
 	void				decrementGrade();
+
+	void				signForm(AForm& form);
+	void				executeForm(const AForm& form);
 
 	class GradeTooHighException : public std::exception {
 	  public:

@@ -1,4 +1,4 @@
-NAME = asterix
+NAME = intern
 
 #Colors
 DEF_COLOR = \033[0;39m
@@ -20,7 +20,8 @@ FILENAMES = main.cpp \
 			AForm.cpp \
 			ShrubberyCreationForm.cpp \
 			RobotomyRequestForm.cpp \
-			PresidentialPardonForm.cpp
+			PresidentialPardonForm.cpp \
+			Intern.cpp
 
 SRC = $(addprefix $(SOURCE_DIR)/, $(FILENAMES))
 OBJ = $(SRC:%.cpp=$(BUILD_DIR)/%.o)

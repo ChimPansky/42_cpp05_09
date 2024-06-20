@@ -3,7 +3,7 @@
 #include <iostream>
 
 int main() {
-	try {
+	//try {
 		Bureaucrat	bob("Bob", 1);
 		Bureaucrat	edd("Edd", 30);
 		Form		form1("Form 1", 100 , 10);
@@ -19,29 +19,29 @@ int main() {
 		edd.signForm(form2);
 		bob.signForm(form2);
 		edd.signForm(form3);
-	}
-	catch (const std::exception& e) {
-		std::cout << e.what() << std::endl;
-	}
-	catch (...) {
-		std::cout << "Caught unknown exception!" << std::endl;
-	}
+	// }
+	// catch (const std::exception& e) {
+	// 	std::cout << e.what() << std::endl;
+	// }
+	// catch (...) {
+	// 	std::cout << "Caught unknown exception!" << std::endl;
+	// }
 
-	std::cout << "---\n";
+	// std::cout << "---\n";
 
-	try {
-		Bureaucrat	bob("Bob", 101);
-		Form		form1("Form 1", 100 , 10);
+	// try {
+	// 	Bureaucrat	bob("Bob", 101);
+	// 	Form		form1("Form 1", 100 , 10);
 
-		std::cout << "Hi, i am " << bob << std::endl;
-		std::cout << "There's a form: " << form1 << std::endl;
-		form1.beSigned(bob);
-	}
-	catch (const std::exception& e) {
-		std::cout << e.what() << std::endl;
-	}
-	catch (...) {
-		std::cout << "Caught unknown exception!" << std::endl;
-	}
+	// 	std::cout << "Hi, i am " << bob << std::endl;
+	// 	std::cout << "There's a form: " << form1 << std::endl;
+	// 	form1.beSigned(bob);
+	// }
+	// catch (const std::exception& e) {
+	// 	std::cout << e.what() << std::endl;
+	// }
+	// catch (...) {
+	// 	std::cout << "Caught unknown exception!" << std::endl;
+	// }
 
 }
