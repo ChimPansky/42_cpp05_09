@@ -6,12 +6,13 @@
 /*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 10:23:31 by tkasbari          #+#    #+#             */
-/*   Updated: 2024/06/22 10:23:32 by tkasbari         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:47:05 by tkasbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include <string>
+#include "utils.hpp"
 
 #ifndef VERBOSE
 	#define VERBOSE 1
@@ -23,12 +24,14 @@
 #endif
 
 class ScalarConverter {
-  public:
-	static int	convert(const std::string& str);
-	static bool	containsUnprintable(const std::string& str);
+  // make Constructors private, so that class is not instantiable...
+  private:
+	ScalarConverter();
+	ScalarConverter(const ScalarConverter& other);
+	~ScalarConverter();
 
-	class NonDisplayableException : public std::exception {
-	  public:
-		const char* what() const throw();
-	};
+	ScalarConverter& operator=(const ScalarConverter& other);
+
+  public:
+	static void	convert(const std::string& str);
 };

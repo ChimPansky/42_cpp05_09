@@ -16,7 +16,8 @@ CFLAGS += -Wall -Wextra -Werror
 # CFLAGS += -fsanitize=address,undefined,leak
 
 FILENAMES = main.cpp \
-			ScalarConverter.cpp
+			ScalarConverter.cpp \
+			utils.cpp
 
 SRC = $(addprefix $(SOURCE_DIR)/, $(FILENAMES))
 OBJ = $(SRC:%.cpp=$(BUILD_DIR)/%.o)
