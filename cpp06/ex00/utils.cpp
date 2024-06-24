@@ -6,7 +6,7 @@
 /*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 11:36:22 by tkasbari          #+#    #+#             */
-/*   Updated: 2024/06/24 13:24:20 by tkasbari         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:14:10 by tkasbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,71 +26,64 @@ bool	containsUnprintable(const std::string& str) {
 	return (str.length() < 1);
 }
 
-enum e_type	checkNumericTypes(const std::string& str) {
-	int	i;
-	int	start = 1;
-	enum e_type result = TYPE_UNKNOWN;
-	if (str[0] == '+' || str[0] == '-')
-		start++;
-	if (!std::isdigit(str[start - 1]))
-		return TYPE_UNKNOWN;
-	i = start;
-	if ((i = str.find(".")) != std::string::npos) {
-		result = TYPE_DOUBLE;
-	}
-	else
-	 	//check only digits now...;
+bool	strIsChar(const std::string& str) {
+	return str.size() == 1 && !std::isdigit(str[0]);
+}
 
+bool	strIsInt(const std::string& str) {
+	size_t		i = 0;
+	bool	valid = false;
+	if (str[0] == '-' || str[0] == '+')
+		i++;
 	for (; i < str.size(); i++) {
-
-		if (!std::isdigit(str[0]))
-			break;
+		if (std::isdigit(str[i]))
+			valid = true;
+		else
+			return false;
 	}
-	if (i == str.size())
-		return TYPE_INT;
+	return valid;
+}
 
+enum e_type	strIsDoubleOrFloat(const std::string& str) {
+	size_t		i = 0;
+	bool	valid = false;
+	std::cout << "strIsDoubleOrFloat" << std::endl;
+	if (str[0] == '-' || str[0] == '+')
+		i++;
+	for (; i < str.size() - 1; i++) {
+		if (std::isdigit(str[i]))
+			continue;
+		if (str[i] == '.') {
+			i++;
+			break;
+		}
+		else
+			return TYPE_UNKNOWN;
+	}
+	std::cout << "after dot i: " << i << std::endl;
+	for (; i < str.size() - 1; i++) {
+		if (std::isdigit(str[i]))
+			valid = true;
+	}
+	if (valid && std::isdigit(str[i]))
+		return TYPE_DOUBLE;
+	if (valid && str[i] == 'f')
+		return TYPE_FLOAT;
+	return TYPE_UNKNOWN;
 }
 
 enum e_type	detectScalarType(const std::string& str) {
-	int	i = 0;
 	if (str.size() < 1)
 		return TYPE_UNKNOWN;
-	if (str.size() == 1) {
-		if (std::isdigit(str[0]))
-			return TYPE_INT;
-		else
-			return TYPE_CHAR;
+	if (strIsChar(str)) {
+		std::cout << "str is char!" << std::endl;
+		return TYPE_CHAR;
 	}
-	return checkNumericTypes(str);
-
-	if (checkTypeInt(str))
+	if (strIsInt(str)) {
+		std::cout << "str is int!" << std::endl;
 		return TYPE_INT;
-	if (checkTypeInt(str))
-		return TYPE_INT;
-	if (str.size() <= 2) {
-		if (str.size() == 1) {
-			if (std::isdigit(str[0]))
-				return TYPE_INT;
-			else
-				return TYPE_CHAR;
-		}
-		return std::isdigit(str[1]) ? TYPE_INT ;
 	}
-	if ((i = str.find(".", 0)) != std::string::npos) {
-
-		return TYPE_DOUBLE;
-	}
-
-	if (str.find("f", 0) != std::string::npos && str.find(".", 0) != std::string::npos){
-		std::cout << "str.find(f, 0)" << str.find("f", 0) << std::endl;
-		std::cout << "str.find(., 0)" << str.find(".", 0) << std::endl;
-		return TYPE_FLOAT;
-	}
-	if ((str[0] == '-' || str[0] == '+') && std::isdigit(str[1]))
-		return TYPE_INT;
-	if (std::isdigit(str[0]))
-		return TYPE_INT;
-	return TYPE_UNKNOWN;
+	return strIsDoubleOrFloat(str);
 }
 
 void	handleChar(const std::string& str) {
@@ -103,10 +96,22 @@ void	handleChar(const std::string& str) {
 void	printChar(int asciiCode) {
 	if (asciiCode < 1 || asciiCode > 127)
 		std::cout << "char: " << msg_impossible << "" << std::endl;
-	else if (std::isprint(asciiCode))
+	else if (!std::isprint(asciiCode))
 		std::cout << "char: " << msg_unprintable << "" << std::endl;
 	else
 		std::cout << "char: '" << static_cast<char>(asciiCode) << "'" << std::endl;
+}
+
+void	printFloat(float f) {
+	std::cout << "float: " << f;
+	// todo: check if i need to add ".0"...
+	std::cout << "f" << std::endl;
+}
+
+void	printDouble(double d) {
+	std::cout << "double: " << d;
+	// todo: check if i need to add ".0"...
+	std::cout << std::endl;
 }
 
 void	handleInt(const std::string& str) {
@@ -122,8 +127,8 @@ void	handleInt(const std::string& str) {
 	}
 	printChar(target);
 	std::cout << "int: " << target << std::endl;
-	std::cout << "float: " << static_cast<float>(target) << "f" << std::endl;
-	std::cout << "double: " << static_cast<double>(target) << std::endl;
+	printFloat(static_cast<float>(target));
+	printDouble(static_cast<double>(target));
 }
 
 void	handleFloat(const std::string& str) {
@@ -139,8 +144,8 @@ void	handleFloat(const std::string& str) {
 	}
 	printChar(static_cast<int>(target));
 	std::cout << "int: " << static_cast<int>(target) << std::endl;
-	std::cout << "float: " << target << "f" << std::endl;
-	std::cout << "double: " << static_cast<double>(target) << std::endl;
+	printFloat(target);
+	printDouble(static_cast<double>(target));
 }
 
 void	handleDouble(const std::string& str) {
@@ -156,6 +161,6 @@ void	handleDouble(const std::string& str) {
 	}
 	printChar(static_cast<int>(target));
 	std::cout << "int: " << static_cast<int>(target) << std::endl;
-	std::cout << "float: " << static_cast<float>(target) << "f" << std::endl;
-	std::cout << "double: " << target << std::endl;
+	printFloat(static_cast<float>(target));
+	printDouble(target);
 }
