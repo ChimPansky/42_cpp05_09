@@ -6,7 +6,7 @@
 /*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 10:23:40 by tkasbari          #+#    #+#             */
-/*   Updated: 2024/06/22 13:50:58 by tkasbari         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:50:46 by tkasbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,7 @@ static void	demoConverter(void) {
 	std::cout << "Now it's your turn! Try out the converter (end with ctrl+D)\n";
 	std::string userInput;
 	while (std::getline(std::cin, userInput)) {
-		try {
-			ScalarConverter::convert(userInput);
-		}
-		catch (const NonDisplayableException& e) {
-			std::cout << e.what() << std::endl;
-		}
+		ScalarConverter::convert(userInput);
 	}
 }
 
@@ -37,12 +32,7 @@ int main(int ac, char** av) {
 		demoConverter();
 		break ;
 	case 2:
-		try {
-			ScalarConverter::convert(av[1]);
-		}
-		catch (const NonDisplayableException& e) {
-			std::cout << e.what() << std::endl;
-		}
+		ScalarConverter::convert(av[1]);
 		break ;
 	default:
 		std::cerr << "Error: Invalid program arguments." << std::endl;
