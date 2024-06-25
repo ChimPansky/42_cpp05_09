@@ -6,19 +6,20 @@
 /*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 10:23:28 by tkasbari          #+#    #+#             */
-/*   Updated: 2024/06/24 11:46:00 by tkasbari         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:22:15 by tkasbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include "ConverterUtils.hpp"
 #include <iostream>
 
 void	ScalarConverter::convert(const std::string& str) {
 	enum e_type dataType = detectScalarType(str);
-	std::cout << "detected TYPE: " << dataType << std::endl;
+	std::cout << typeMessages[dataType] << std::endl;
 	switch (dataType) {
 		case (TYPE_UNKNOWN):
-			std::cout << "Could not determine data type of scalar to convert!" << std::endl;
+			handleImpossible();
 			break;
 		case (TYPE_CHAR):
 			handleChar(str);
@@ -32,5 +33,9 @@ void	ScalarConverter::convert(const std::string& str) {
 		case (TYPE_DOUBLE):
 			handleDouble(str);
 			break;
+		case (TYPE_PSEUDO):
+			handlePseudo(str);
+			break;
+
 	}
 }

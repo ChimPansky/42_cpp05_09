@@ -17,7 +17,7 @@ CFLAGS += -Wall -Wextra -Werror
 
 FILENAMES = main.cpp \
 			ScalarConverter.cpp \
-			utils.cpp
+			ConverterUtils.cpp
 
 SRC = $(addprefix $(SOURCE_DIR)/, $(FILENAMES))
 OBJ = $(SRC:%.cpp=$(BUILD_DIR)/%.o)
