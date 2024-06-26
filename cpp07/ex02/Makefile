@@ -15,7 +15,8 @@ CFLAGS += -MMD -g
 CFLAGS += -Wall -Wextra -Werror
 # CFLAGS += -fsanitize=address,undefined,leak
 
-FILENAMES = main.cpp
+# FILENAMES = main.cpp
+FILENAMES = tests.cpp
 
 SRC = $(addprefix $(SOURCE_DIR)/, $(FILENAMES))
 OBJ = $(SRC:%.cpp=$(BUILD_DIR)/%.o)
