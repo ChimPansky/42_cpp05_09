@@ -7,6 +7,7 @@
 int main(int, char**)
 {
     Array<int> numbers(MAX_VAL);
+	std::cout << numbers[0] << std::endl;
     int* mirror = new int[MAX_VAL];
     srand(time(NULL));
     for (int i = 0; i < MAX_VAL; i++)
