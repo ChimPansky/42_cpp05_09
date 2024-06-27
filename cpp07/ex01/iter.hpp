@@ -7,3 +7,10 @@ void	iter(T* arrayPtr, size_t arrayLen, void (*foo)(T&)) {
 		foo(arrayPtr[i]);
 	}
 }
+
+template <typename T>
+void	iter(T* arrayPtr, size_t arrayLen, void (*foo)(const T&)) {
+	for (size_t i = 0; i < arrayLen; i++) {
+		foo(arrayPtr[i]);
+	}
+}
