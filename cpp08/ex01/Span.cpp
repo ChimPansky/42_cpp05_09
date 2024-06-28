@@ -19,12 +19,18 @@ Span& Span::operator=(Span const & other) {
 	return *this;
 }
 
-void Span::addNumber(int number) {
+void	Span::addNumber(int number) {
 	if (_values.size() < _capacity) {
 		_values.insert(number);
 	} else {
 		throw SpanFullException();
 	}
+}
+
+void	Span::addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end) {
+	if (_values.size() + (end - begin) > _capacity)
+		throw RangeTooBigException();
+	_values.insert(begin, end);
 }
 
 int Span::shortestSpan() const {
@@ -67,6 +73,7 @@ void Span::print() const {
 		std::cout << "{empty}" << std::endl;
 		return;
 	}
+	std::cout << "Span size: " << _values.size() << "/" << _capacity << std::endl;
 	for (std::multiset<int>::iterator it = _values.begin(); it != _values.end(); it++) {
 		std::cout << *it << " ";
 	}
@@ -77,6 +84,10 @@ void Span::print() const {
 
 const char* Span::SpanFullException::what() const throw() {
 	return "So sorry Madam/Sir, but this span is quite full already!";
+}
+
+const char* Span::RangeTooBigException::what() const throw() {
+	return "So sorry Madam/Sir, but the range you are trying to add is simply too large!";
 }
 
 const char* Span::NotEnoughNumbersException::what() const throw() {
