@@ -21,6 +21,20 @@ int main() {
 		std::cout << "Found" << std::endl;
 	}
 
+	std::cout << "\n---Testing easyfind with const std::vector---\n" << std::endl;
+	const std::vector<int> cvec = vec;
+
+	if (easyfind(cvec, 42) == cvec.end()) {
+		std::cout << "Not found" << std::endl;
+	} else {
+		std::cout << "Found" << std::endl;
+	}
+	if (easyfind(cvec, 5) == cvec.end()) {
+		std::cout << "Not found" << std::endl;
+	} else {
+		std::cout << "Found" << std::endl;
+	}
+
 	std::cout << "\n---Testing easyfind with std::list---\n" << std::endl;
 
 	std::list<int> lst;
