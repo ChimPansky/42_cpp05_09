@@ -59,7 +59,7 @@ class MutantStack : public std::stack<T> {
 		std::cout << "MutantStack.print()" << std::endl;
 		if (std::stack<T>::c.empty())
 			std::cout << "{empty}" << std::endl;
-		for (MutantStack<int>::const_iterator it = this->begin(); it != this->end(); it++) {
+		for (const_iterator it = this->begin(); it != this->end(); it++) {
 			std::cout << *it << std::endl;
 		}
 	}
@@ -68,7 +68,7 @@ class MutantStack : public std::stack<T> {
 		std::cout << "MutantStack.rprint()" << std::endl;
 		if (std::stack<T>::c.empty())
 			std::cout << "{empty}" << std::endl;
-		for (MutantStack<int>::const_reverse_iterator it = this->rbegin(); it != this->rend(); it++) {
+		for (const_reverse_iterator it = this->rbegin(); it != this->rend(); it++) {
 			std::cout << *it << std::endl;
 		}
 	}

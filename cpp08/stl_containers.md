@@ -11,14 +11,22 @@
 #include <vector>
 
 int main() {
-    std::vector<int> vec;
+	std::vector<int> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
-
+	vec.push_back(4);
+	vec.push_back(5);
     for (size_t i = 0; i < vec.size(); ++i) {
         std::cout << vec[i] << " ";
-    }
+    } // 1 2 3 4 5
+	std::cout << std::endl;
+
+	vec.assign(3, 42); // clear contents of vector and then 3 times add the value 42
+	for (size_t i = 0; i < vec.size(); ++i) {
+        std::cout << vec[i] << " ";
+    } // 42 42 42
+	std::cout << std::endl;
 
     return 0;
 }
