@@ -13,8 +13,11 @@ We work through the input string from left to right. When we find a value, we pu
 Example:
 
 Stack: {empty}
+
 Input: "8 9 * 9 - 9 - 9 - 4 - 1 +"
+
 --> 8 * 9
+
 Stack: 72
 Input: "9 - 9 - 9 - 4 - 1 +"
 -->
