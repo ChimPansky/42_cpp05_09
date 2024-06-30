@@ -1,4 +1,4 @@
-NAME = rpn
+NAME = RPN
 
 #Colors
 DEF_COLOR = \033[0;39m
@@ -16,7 +16,7 @@ CFLAGS += -Wall -Wextra -Werror
 # CFLAGS += -fsanitize=address,undefined,leak
 
 FILENAMES = main.cpp \
-			rpn.cpp
+			RPN.cpp
 
 SRC = $(addprefix $(SOURCE_DIR)/, $(FILENAMES))
 OBJ = $(SRC:%.cpp=$(BUILD_DIR)/%.o)
