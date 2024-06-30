@@ -11,6 +11,7 @@
 We work through the input string from left to right. When we find a value, we put it on the stack (push). When we find an operator, we take the top 2 elements from the stack (2 pops) and apply the operator on them and put the result back on the stack (push). We process the input string until the end and should end up with exactly 1 value on the stack which is the endresult of the mathematical expression. If during our calculations we find an operator, but do not have at least 2 values on the stack, then the syntax of the input string was wrong.
 
 Example:
+
 Stack: {empty}
 Input: "8 9 * 9 - 9 - 9 - 4 - 1 +"
 --> 8 * 9
