@@ -2,14 +2,16 @@
 #include <stack>
 #include <iostream>
 
-template <typename T>
-class MutantStack : public std::stack<T> {
+// by default std::stack has a std::deque as its underlying container
+// we can change this by providing a second template argument for MutantStack
+template <typename _Tp, typename _Sequence = std::deque<_Tp> >
+class MutantStack : public std::stack<_Tp, _Sequence> {
   public:
 	MutantStack()
-		: std::stack<T>() { std::cout << "MutantStack Default Constructor" << std::endl; }
+		: std::stack<_Tp, _Sequence>() { std::cout << "MutantStack Default Constructor" << std::endl; }
 
 	MutantStack(const MutantStack& other)
-		: std::stack<T>(other) { std::cout << "MutantStack Copy Constructor" << std::endl;}
+		: std::stack<_Tp, _Sequence>(other) { std::cout << "MutantStack Copy Constructor" << std::endl;}
 
 	~MutantStack() { std::cout << "MutantStack Destructor" << std::endl; }
 
@@ -20,69 +22,57 @@ class MutantStack : public std::stack<T> {
 		return *this;
 	}
 
-	typedef typename std::stack<T>::container_type::iterator iterator;
-	typedef typename std::stack<T>::container_type::const_iterator const_iterator;
+	typedef typename std::stack<_Tp, _Sequence> base_stack;
 
-	typedef typename std::stack<T>::container_type::reverse_iterator reverse_iterator;
-	typedef typename std::stack<T>::container_type::const_reverse_iterator const_reverse_iterator;
+	typedef typename _Sequence::iterator iterator;
+	typedef typename _Sequence::iterator const_iterator;
+	typedef typename _Sequence::reverse_iterator reverse_iterator;
+	typedef typename _Sequence::const_reverse_iterator const_reverse_iterator;
+	// could also write typedefs in this pattern:
+	//typedef typename std::stack<T>::container_type::const_iterator const_iterator;
 
 	iterator 				begin() {
-		return std::stack<T>::c.begin();
+		return base_stack::c.begin();
 	};
-	const_iterator 			begin() const {
-		return std::stack<T>::c.begin();
+	const_iterator			begin() const {
+		return base_stack::c.begin();
 	}
-
-	iterator 				end() {
-		return std::stack<T>::c.end();
+	iterator				end() {
+		return base_stack::c.end();
 	}
-	const_iterator 			end() const {
-		return std::stack<T>::c.end();
+	const_iterator			end() const {
+		return base_stack::c.end();
 	}
-
-	reverse_iterator 		rbegin() {
-		return std::stack<T>::c.rbegin();
+	reverse_iterator		rbegin() {
+		return base_stack::c.rbegin();
 	}
 	const_reverse_iterator 	rbegin() const {
-		return std::stack<T>::c.rbegin();
+		return base_stack::c.rbegin();
 	}
-
-	reverse_iterator 		rend() {
-		return std::stack<T>::c.rend();
+	reverse_iterator		 rend() {
+		return base_stack::c.rend();
 	}
 	const_reverse_iterator 	rend() const {
-		return std::stack<T>::c.rend();
+		return base_stack::c.rend();
 	}
 
-
-	void	print() const {
+	void	print() {
 		std::cout << "MutantStack.print()" << std::endl;
-		if (std::stack<T>::c.empty())
+		if (base_stack::c.empty())
 			std::cout << "{empty}" << std::endl;
-		for (const_iterator it = this->begin(); it != this->end(); it++) {
+		for (iterator it = this->begin(); it != this->end(); it++) {
 			std::cout << *it << std::endl;
 		}
 	}
 
-	void	rprint() const {
+	void	rprint() {
 		std::cout << "MutantStack.rprint()" << std::endl;
-		if (std::stack<T>::c.empty())
+		if (base_stack::c.empty())
 			std::cout << "{empty}" << std::endl;
-		for (const_reverse_iterator it = this->rbegin(); it != this->rend(); it++) {
+		for (reverse_iterator it = this->rbegin(); it != this->rend(); it++) {
+
 			std::cout << *it << std::endl;
 		}
 	}
 
 };
-
-	// typename std::stack<T>::container_type::iterator begin();
-	// typename std::stack<T>::container_type::iterator end();
-
-	// typename std::stack<T>::container_type::iterator end();
-	// typename std::stack<T>::container_type::const_iterator cend() const;
-
-	// typename std::stack<T>::container_type::reverse_iterator rbegin();
-	// typename std::stack<T>::container_type::const_reverse_iterator crbegin() const;
-
-	// typename std::stack<T>::container_type::reverse_iterator rend();
-	// typename std::stack<T>::container_type::const_reverse_iterator crend() const;

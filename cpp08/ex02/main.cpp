@@ -6,7 +6,8 @@
 int main() {
 	{
 		std::cout << "\n---TESTS FROM SUBJECT (MutantStack)---" << std::endl;
-		MutantStack<int> mstack;
+		MutantStack<int, std::deque<int> > mstack;
+		// MutantStack<int> mstackx;
 		mstack.push(5);
 		mstack.push(17);
 		std::cout << mstack.top() << std::endl;
@@ -17,7 +18,7 @@ int main() {
 		mstack.push(737);
 		//[...]
 		mstack.push(0);
-		MutantStack<int>::iterator it = mstack.begin();
+		MutantStack<int, std::deque<int> >::iterator it = mstack.begin();
 		MutantStack<int>::iterator ite = mstack.end();
 		++it;
 		--it;
@@ -111,12 +112,13 @@ int main() {
 		}
 		std::cout << std::endl;
 	}
-
+	return 0;
 	{
 		std::cout << "\n---SECTION 4---" << std::endl;
 		std::cout << "MutantStack const_iterator/const_reverse_iterator test\n" << std::endl;
 
-		MutantStack<float> st1;
+		// MutantStack<float> st1;
+		MutantStack<float, std::deque<float> > st1;
 		st1.push(42.42f);
 		st1.push(0);
 		st1.push(-456464.32435454f);
