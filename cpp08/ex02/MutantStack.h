@@ -70,6 +70,7 @@ class MutantStack : public std::stack<_Tp, _Sequence> {
 		if (base_stack::c.empty())
 			std::cout << "{empty}" << std::endl;
 		for (reverse_iterator it = this->rbegin(); it != this->rend(); it++) {
+
 			std::cout << *it << std::endl;
 		}
 	}
