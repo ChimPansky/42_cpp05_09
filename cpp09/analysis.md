@@ -50,12 +50,12 @@ Input: "+"
 --> 41 + 1
 Stack: 42
 Input: "" --> END condition reached
+```
 
 ## Ex02 PmergeMe (aka Merge-Insert sort algorithm aka Ford-Johnson algorithm)
 ### optimal container:  `???`
 - **Why?**
 
-    std::deque<int> deq;
 ### `std::deque`
 ### `std::list`
 ### `std::set`
