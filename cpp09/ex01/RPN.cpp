@@ -9,7 +9,7 @@ bool				RPN::_fail = false;
 std::stringstream	RPN::_ssInput;
 
 void	RPN::calculate(const std::string& input, int& target) {
-	_reset(input);
+	_resetCalculator(input);
 	std::string	rpnToken;
 	while (_ssInput >> rpnToken && !_fail) {
 		_processToken(rpnToken);
@@ -27,7 +27,7 @@ bool	RPN::fail() {
 	return _fail;
 }
 
-void	RPN::_reset(const std::string& input) {
+void	RPN::_resetCalculator(const std::string& input) {
 	_clearStack();
 	_ssInput.str(input);
 	_ssInput.clear();

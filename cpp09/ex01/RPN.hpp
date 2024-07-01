@@ -20,7 +20,7 @@ class RPN {
 	static bool							_fail;
 	static std::stringstream			_ssInput;
 
-	static void	_reset(const std::string& input);
+	static void	_resetCalculator(const std::string& input);
 	static void	_clearStack();
 	static void	_processToken(std::string& rpnToken);
 	static void	_executeOperation(std::string& op);
