@@ -9,13 +9,14 @@
 // - supported operators: + - / *
 // - no brackets
 class RPN {
-	// Constructors: private, because no instance of class is needed
   private:
+	// Constructors are private, because no instance of class is needed
 	RPN();
 	RPN(const RPN& other);
 	~RPN();
-  private:
-	// static members needed for evaluating mathematical expressions in RPN-format passed as a string
+
+	const RPN operator=(const RPN& other);
+
 	static std::stack<int>				_stack;
 	static bool							_fail;
 	static std::stringstream			_ssInput;

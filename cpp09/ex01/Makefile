@@ -17,7 +17,7 @@ CFLAGS += -Wall -Wextra -Werror
 
 FILENAMES = main.cpp \
 			RPN.cpp
-
+			
 SRC = $(addprefix $(SOURCE_DIR)/, $(FILENAMES))
 OBJ = $(SRC:%.cpp=$(BUILD_DIR)/%.o)
 DEP = $(OBJ:%.o=%.d)

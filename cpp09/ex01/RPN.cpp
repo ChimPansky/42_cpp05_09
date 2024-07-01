@@ -1,7 +1,4 @@
 #include "RPN.hpp"
-#include <cctype>
-#include <sstream>
-#include <string>
 #include <iostream>
 
 std::stack<int>		RPN::_stack;
@@ -14,9 +11,14 @@ void	RPN::calculate(const std::string& input, int& target) {
 	while (_ssInput >> rpnToken && !_fail) {
 		_processToken(rpnToken);
 	}
+	if (_fail)
+		return ;
+	if (_stack.size() > 1)
+		std::cout << "Error: Missing operator(s)" << std::endl;
+	if (_stack.size() < 1)
+		std::cout << "Error: Missing operand(s)" << std::endl;
 	if (_stack.size() != 1) {
 		_fail = true;
-		std::cout << "Error" << std::endl;
 		return ;
 	}
 	target = _stack.top();
@@ -49,12 +51,14 @@ void	RPN::_processToken(std::string& rpnToken) {
 		return ;
 	}
 	_fail = true;
-	std::cout << "Error: Found invalid Character: " << rpnToken[0] << std::endl;
+	std::cout << "Error: Found invalid operand: " << rpnToken[0] << std::endl;
 }
 
 void	RPN::_executeOperation(std::string& op) {
 	if (_stack.size() < 2) {
 		std::cout << "Error: Not enough operands to execute: " << op << std::endl;
+		_fail = true;
+		return ;
 	}
 	int	right = _stack.top();
 	_stack.pop();
@@ -70,11 +74,12 @@ void	RPN::_executeOperation(std::string& op) {
 		if (right == 0) {
 			std::cout << "Error: Division by zero: " << left << op << right << std::endl;
 			_fail = true;
+			return ;
 		}
 		_stack.push(left / right);
 	}
 	else {
-		std::cout << "Invalid operator: " << op << std::endl;
+		std::cout << "Error: Invalid operator: " << op << std::endl;
 		_fail = true;
 	}
 }
