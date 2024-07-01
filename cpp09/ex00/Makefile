@@ -16,7 +16,8 @@ CFLAGS += -Wall -Wextra -Werror
 # CFLAGS += -fsanitize=address,undefined,leak
 
 FILENAMES = main.cpp \
-			BitcoinExchange.cpp
+			BitcoinExchange.cpp \
+			dates.cpp
 
 SRC = $(addprefix $(SOURCE_DIR)/, $(FILENAMES))
 OBJ = $(SRC:%.cpp=$(BUILD_DIR)/%.o)

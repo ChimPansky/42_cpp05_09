@@ -1,10 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/01 22:32:59 by tkasbari          #+#    #+#             */
+/*   Updated: 2024/07/01 23:10:18 by tkasbari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "BitcoinExchange.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include "dates.hpp"
 
-mapStrDbl	BitcoinExchange::_map;
-bool		BitcoinExchange::_fail = false;
+mapStrDbl		BitcoinExchange::_map;
+std::ifstream	BitcoinExchange::_inFile;
+bool			BitcoinExchange::_fail = false;
 
 // public methods:
 void	BitcoinExchange::loadDatabaseFromCSV(const char* fPath) {
@@ -25,20 +39,19 @@ void	BitcoinExchange::loadDatabaseFromCSV(const char* fPath) {
 	}
 }
 
-void	BitcoinExchange::lookupInputs(const char *fPath) {
-	if (_fail || _map.empty()) {
-		std::cerr << "Error: There seems to be a problem with the database."
-			<< "Use loadDatabaseFromCSV() to (re)populate..." << std::endl;
-		return ;
-	}
-	std::ifstream	inFile(fPath);
-	if (!inFile.is_open()) {
+bool	BitcoinExchange::loadInputFile(const char *fPath) {
+	_inFile.open(fPath);
+	if (!_inFile.is_open()) {
 		std::cerr << "Error: cannot open input file: " << fPath << std::endl;
-		return ;
+		return false;
 	}
+	return true;
+}
+
+void	BitcoinExchange::processInputFile() {
 	std::string	line;
-	std::getline(inFile, line);
-	while (std::getline(inFile, line) && !_fail)
+	std::getline(_inFile, line);
+	while (std::getline(_inFile, line) && !_fail)
 		_processLookup(line);
 }
 
@@ -54,7 +67,7 @@ void	BitcoinExchange::printData() {
 	}
 	for (mapStrDbl::const_iterator it
 		= _map.begin(); it != _map.end(); it++) {
-			std::cout << it->first << " | " << std::fixed << it->second << std::endl;
+			std::cout << it->first << " | " << it->second << std::endl;
 	}
 }
 
@@ -68,12 +81,11 @@ void	BitcoinExchange::_processCsvRecord(const std::string& line) {
 	std::stringstream	ssLine(line);
 	std::string			key;
 	double				val;
-	std::cout << "inserting..." << std::endl;
 	if (!std::getline(ssLine, key, ',')) {
 		std::cerr << "Error: cannot extract date from CSV - skipping insert" << std::endl;
 		return ;
 	}
-	if (!_validateDate(key)) {
+	if (!validateDate(key)) {
 		std::cerr << "Error: found invalid date in CSV - skipping insert" << std::endl;
 		return ;
 	}
@@ -84,6 +96,7 @@ void	BitcoinExchange::_processCsvRecord(const std::string& line) {
 	_map.insert(std::make_pair(key, val));
 }
 
+
 void	BitcoinExchange::_processLookup(const std::string& line) {
 	std::stringstream	ssLine(line);
 	std::string			date;
@@ -92,7 +105,7 @@ void	BitcoinExchange::_processLookup(const std::string& line) {
 		std::cerr << "Error: cannot extract date from input file" << std::endl;
 		return ;
 	}
-	if (!_validateDate(date)) {
+	if (!validateDate(date)) {
 		std::cerr << "Error: bad input => " << date << std::endl;
 		return ;
 	}
@@ -109,13 +122,6 @@ void	BitcoinExchange::_processLookup(const std::string& line) {
 		return ;
 	}
 	_convertAndPrint(date, btcAmount);
-}
-
-bool	BitcoinExchange::_validateDate(const std::string& keyDate) {	//Todo: add proper date check...
-	std::cout << "DATE LENGTH: " << keyDate.length() << std::endl;
-	if (keyDate.length() == 10 || keyDate.length() == 11)
-		return true;
-	return false;
 }
 
 mapStrDbl::iterator	BitcoinExchange::_lookup(const std::string& key) {
