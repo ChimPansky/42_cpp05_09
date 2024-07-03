@@ -1,8 +1,8 @@
 #include "RPN.hpp"
-#include <climits>
+#include <limits>
 #include <iostream>
 
-std::stack<long>		RPN::_stack;
+std::stack<long>	RPN::_stack;
 bool				RPN::_fail = false;
 bool				RPN::_operandsGreaterTen = false;
 bool				RPN::_overflow = false;
@@ -92,17 +92,17 @@ void	RPN::_processToken(std::string& rpnToken) {
 }
 
 void	RPN::_add(long left, long right) {
-	if (right > 0 && (left > (LONG_MAX - right)))
+	if (right > 0 && (left > (std::numeric_limits<long>::max() - right)))
 		_overflow = true;
-	else if (right < 0 && (left < (LONG_MIN - right)))
+	else if (right < 0 && (left < (std::numeric_limits<long>::min() - right)))
 		_underflow = true;
 	_stack.push(left + right);
 }
 
 void	RPN::_sub(long left, long right) {
-	if (right < 0 && (left > (LONG_MAX + right)))
+	if (right < 0 && (left > (std::numeric_limits<long>::max() + right)))
 		_overflow = true;
-	else if (right > 0 && (left < (LONG_MIN + right)))
+	else if (right > 0 && (left < (std::numeric_limits<long>::min() + right)))
 		_underflow = true;
 	_stack.push(left - right);
 }
