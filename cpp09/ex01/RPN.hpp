@@ -5,7 +5,6 @@
 
 // Reverse Polish Notation Calculater (stack-based)
 // restrictions:
-// - operands have to be positive single digits ( 0 <= x <= 9)
 // - supported operators: + - / *
 // - no brackets
 class RPN {
@@ -17,16 +16,25 @@ class RPN {
 
 	const RPN operator=(const RPN& other);
 
-	static std::stack<int>				_stack;
-	static bool							_fail;
-	static std::stringstream			_ssInput;
+	static std::stack<long>		_stack;
+	static bool					_fail;
+	static bool					_operandsGreaterTen;
+	static bool					_overflow;
+	static bool					_underflow;
+	static std::stringstream	_ssInput;
 
 	static void	_resetCalculator(const std::string& input);
 	static void	_clearStack();
+	static bool	_strIsNum(const std::string& str);
+	static bool	_strToLong(const std::string& str, long& target);
 	static void	_processToken(std::string& rpnToken);
+	static void	_add(long left, long right);
+	static void	_sub(long left, long right);
+	static void	_mult(long left, long right);
+	static void	_div(long left, long right);
 	static void	_executeOperation(std::string& op);
 
   public:
-	static void	calculate(const std::string& expression, int& target);
+	static void	calculate(const std::string& expression, long& target);
 	static bool	fail();
 };
