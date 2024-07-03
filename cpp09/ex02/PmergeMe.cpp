@@ -10,6 +10,14 @@
 #include <ctime>
 #include <iomanip>
 
+// jacob[n] = jacob[n-2] * 2 + jacob[n-1]
+static const int jacobsthal[33] = {
+	0,		  1, 		 1, 		3, 		   5, 			11, 	  21,
+	43, 	  85, 		 171, 	  	341, 	   683, 	  	1365, 	  2731,
+	5461, 	  10923, 	 21845, 	43691, 	   87381, 		174763,   349525,
+	699051,   1398101,   2796203,   5592405,   11184811, 	22369621, 44739243,
+	89478485, 178956971, 357913941, 715827883, 1431655765};
+
 bool	strIsNum(const std::string& str) {
 	size_t		i = 0;
 	bool		valid = false;
@@ -54,7 +62,9 @@ int	processArguments(std::vector<int>& vec, int argc, char**& numberArrays) {
 	return Status::SUCCESS;
 }
 
+
 int	fordJohnsonSort(std::vector<int>&vec) {
+
 	if (false)
 		return Status::ERROR_FJ_VEC;
 	for (size_t i = 0; i < INT_MAX; i++)
