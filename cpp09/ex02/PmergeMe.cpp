@@ -62,22 +62,61 @@ int	processArguments(std::vector<int>& vec, int argc, char**& numberArrays) {
 	return Status::SUCCESS;
 }
 
+std::vector<int>::iterator	binarySearch(std::vector<int>& mainChain, int val) {
+	std::vector<int>::iterator	left = mainChain.begin();
+	std::vector<int>::iterator	right = mainChain.end();
+	while (left < right) {
+		std::vector<int>::iterator	center = left + (right - left) / 2;
+		if (*center < val)
+			left = center + 1;
+		else
+			right = center;
+	}
+	return left;
+}
 
-int	fordJohnsonSort(std::vector<int>&vec) {
+int	fordJohnsonSort(std::vector<int>&source) {
 
 	if (false)
 		return Status::ERROR_FJ_VEC;
-	for (size_t i = 0; i < INT_MAX; i++)
-		(void)vec;
-	std::sort(vec.begin(), vec.end());
+	if (source.size() < 2)
+		return Status::SUCCESS;
+
+	// dividing into n/2 pairs and sorting those pairs
+	std::vector<int>::iterator	left = source.begin();
+	std::vector<int>::iterator	right = left + 1;
+	for (; left != source.end() && left != (source.end() - 1); left += 2, right += 2) {
+		std::cout << "left: " << *left << " | right: " << *right << " | end(): " << *(source.end() - 1) << std::endl;
+		if (*left > *right)
+			std::swap(*left, *right);
+	}
+	std::cout << "source: ";
+	printContainer(source, 10);
+
+	// iterating through the larger elements of the pairs and binary inserting them into a new vector...
+	std::vector<int>	mainChain;
+	for (std::vector<int>::iterator it = (source.begin() + 1);
+	it != source.end() && it != (source.end() - 1); it += 2) {
+		std::vector<int>::iterator	insertPos = binarySearch(mainChain, *it);
+		mainChain.insert(insertPos, *it);
+	}
+	std::cout << "main chain: ";
+	printContainer(mainChain, 10);
+
+	// TODO: binary insert the smaller elements of the pairs in order of jacobsthal
+	// (start with lower element of (J)3rd pair, then 2nd, (J)5th, 4th, (J)11th, 10th, 9th, 8th, 7th, 6th, (J)21th...)
+	// question: when to insert lower element of 1st pair?
+	// careful with single element when source.size() is odd...
+
+
+
+	// std::sort(vec.begin(), vec.end());
 	return Status::SUCCESS;
 }
 
 int	fordJohnsonSort(std::list<int>&list) {
 	if (false)
 		return Status::ERROR_FJ_LIST;
-	for (size_t i = 0; i < INT_MAX; i++)
-		(void)list;
 	list.sort();
 	return Status::SUCCESS;
 }
