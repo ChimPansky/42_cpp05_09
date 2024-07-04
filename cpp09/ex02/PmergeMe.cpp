@@ -105,12 +105,11 @@ int	fordJohnsonSort(std::vector<int>&raw, std::vector<int>&sorted) {
 	std::vector<int>::iterator	insertPos;
 
 	// iterating through the larger elements of the pairs and binary inserting them into sorted...
-	for (std::vector<int>::iterator it = (raw.begin() + 1);
-	it != raw.end() && it != (raw.end() - 1); it += 2) {
+	for (std::vector<int>::iterator it = (raw.begin() + 1);	it != raw.end() && it != raw.end() + 1; it += 2) {
 		insertPos = binarySearch(sorted, *it);	// we could use vector.upper_bound instead of binarySearch, but then we cannot keep track of how many comparisons we made (compareCounter)....
 		sorted.insert(insertPos, *it);
 	}
-	std::cout << "main chain: ";
+	std::cout << "main chain after larger elements insertion: ";
 	printContainer(sorted, 10);
 	std::cout << "lower elements: ";
 	printContainer(lowerElements, 10);
@@ -118,24 +117,27 @@ int	fordJohnsonSort(std::vector<int>&raw, std::vector<int>&sorted) {
 	// iterating through the smaller elements of the pairs and inserting them into sorted with the help of jacobsthal
 	int	limit = lowerElements.size();	// half of the raw vector (+1 if odd)
 	std::vector<int>::iterator	right_bound;
-	std::vector<int>::iterator	left_bound = lowerElements.begin();
+	std::vector<int>::iterator	left_bound = lowerElements.begin() + 1;
 	sorted.insert(sorted.begin(), *lowerElements.begin());
 	for (int i = 3; jacobsthal[i] <= limit; i++) {
 		right_bound = lowerElements.begin() + jacobsthal[i];
+		std::cout << "jacobsthal right bound: " << right_bound - lowerElements.begin() << std::endl;
 		for (; right_bound != left_bound; right_bound--) {
 			insertPos = binarySearch(sorted, *right_bound);	// improve binary search for this
+			std::cout << "inserting: " << *right_bound << std::endl;
 			sorted.insert(insertPos, *right_bound);
 		}
-		left_bound = lowerElements.begin() + jacobsthal[i] + 1;
+		left_bound = lowerElements.begin() + jacobsthal[i];
 	}
-	std::cout << "main chain: ";
+	std::cout << "main chain after lower elements insertion: ";
 	printContainer(sorted, 10);
 	// insert rest of lowerElements into sorted vector (needs to be done when lowerElements.size() is not a jacobsthal-number)
-	for (; left_bound != lowerElements.end(); left_bound++) {
+	for (; left_bound != lowerElements.end(); left_bound++) { // TODO: check the bounds. it inserts too much
+		std::cout << "inserting rest: " << *left_bound << std::endl;
 		insertPos = binarySearch(sorted, *left_bound); // improve binary search for this
 		sorted.insert(insertPos, *left_bound);
 	}
-	std::cout << "main chain: ";
+	std::cout << "main chain after inserting rest of lowerElements: ";
 	printContainer(sorted, 10);
 
 
