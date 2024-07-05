@@ -23,7 +23,7 @@ class FjVector : public intVector {
 	intVector	_sorted;
 	intVector	_lower;
 	bool		_hasStrayElement;
-	int			_lastLowerInsertedIndex;
+	int			_lastElement;
 	int			_sortComparisons;
 
   private:

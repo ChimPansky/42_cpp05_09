@@ -28,11 +28,11 @@ void	FjVector::sort() {
 	VERBOSE_OUT("FjVector.sort():");
 	if (size() < 2)
 		return ;
-	_hasStrayElement = size() % 2 == 1;
 	VERBOSE_OUT("has stray element: " << _hasStrayElement);
 	_sorted.clear();
 	_lower.clear();
-	_lastLowerInsertedIndex = 0;
+	_hasStrayElement = size() % 2 == 1;
+	_lastElement = *(end() - 1);
 	_sortComparisons = 0;
 	_mergeInsert(*this);
 }
@@ -50,6 +50,8 @@ void	FjVector::_mergeInsert(intVector& vec) {
 
 	_sorted.insert(_sorted.begin(), pairs[0].first);
 	_insertSmallerElements(pairs);
+	if (_hasStrayElement)
+		_binaryInsert(_sorted, _sorted.begin(), _sorted.end(), _lastElement);
 	intVector::operator=(_sorted);
 	VERBOSE_OUT(size() << " elements sorted.");
 	VERBOSE_OUT("Comparisons done: " << _sortComparisons);
