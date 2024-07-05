@@ -46,6 +46,7 @@ void	FjVector::_mergeInsert(intVector& vec) {
 	_printPairs(pairs);
 	std::cout << std::endl;
 	_insertLargerElements(pairs);
+	VERBOSE_OUT_ARGS("sorted upper: ", _printVec(_sorted));
 
 
 	_sorted.insert(_sorted.begin(), pairs[0].first);
@@ -144,19 +145,27 @@ void	FjVector::_insertSmallerElements(pairVector& pairs) {
 
 	intVector::iterator	left;
 	intVector::iterator	right;
+
+	intVector::iterator	optimalPos;
+
 	int	insertVal;
 
 	while (pairNumber <= pairs.size()) {
 		jacobsthal = jacobsthal::getBounds(pairNumber);
 		std::cout << "jacob bounds: (" << jacobsthal.first << "," << jacobsthal.second << ")" << std::endl;
 		pairNumber = std::min(pairs.size(), jacobsthal.second);
+		std::cout << "pairnumber: " << pairNumber << std::endl;
 		while (pairNumber > jacobsthal.first) {
 			// TODO: optimize insert range...
-			left = _sorted.begin() + jacobsthal.first;
-			right = std::min(_sorted.begin() + jacobsthal.second * 2 -1, _sorted.end());
+			left = _sorted.begin() + jacobsthal.first - 1;
+			right = std::min(_sorted.begin() + jacobsthal.second * 2 - 1, _sorted.end() - 1);
 			insertVal = (pairs.begin() + pairNumber - 1)->first;
-			_binaryInsert(_sorted, left, right, insertVal);
+			std::cout << "sorted.begin(): " << _sorted.begin().base() << std::endl;
 			std::cout << "binary inserting pair number: " << pairNumber << " in range " << left - _sorted.begin() << "/" << right - _sorted.begin() << std::endl;
+			//optimalPos = std::lower_bound(left, right, insertVal);
+			optimalPos = std::lower_bound(_sorted.begin(), _sorted.end(), insertVal);
+			//_sorted.insert(optimalPos, insertVal);
+			_binaryInsert(_sorted, _sorted.begin(), _sorted.end(), insertVal);
 			pairNumber--;
 		}
 		pairNumber = jacobsthal.second + 1;
@@ -170,6 +179,7 @@ void	FjVector::_insertSmallerElements(pairVector& pairs) {
 
 void	FjVector::_binaryInsert(intVector& vec, intVector::iterator left, intVector::iterator right, int val) {
 	intVector::iterator	center;
+	int tempComp = 0;
 	while (left < right) {
 		// std::cout << "left: " << left - vec.begin() << " | right: " << right - vec.begin() << std::endl;
 		center = left + (right - left) / 2;
@@ -177,9 +187,11 @@ void	FjVector::_binaryInsert(intVector& vec, intVector::iterator left, intVector
 			left = center + 1;
 		else
 			right = center;
+		tempComp++;
 		_sortComparisons++;
 	}
 	// std::cout << "insert index: " << left - vec.begin() << std::endl;
+	std::cout << "binary insert did " << tempComp << " comparisons..." << std::endl;
 	vec.insert(left, val);
 }
 

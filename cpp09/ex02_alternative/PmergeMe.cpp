@@ -83,7 +83,7 @@ int main (int argc, char** args) {
 	if (processArguments(vecNumbers, argc, args) != Status::SUCCESS)
 		return Status::ERROR_ARGUMENTS;
 	// TODO: allow duplicates? does it all work with duplicate values?
-	int	status = sortAndDisplay(vecNumbers, 10);
+	int	status = sortAndDisplay(vecNumbers, 30);
 	if (status != Status::SUCCESS)
 		return status;
 	return Status::SUCCESS;
