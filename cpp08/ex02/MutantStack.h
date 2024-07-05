@@ -18,7 +18,7 @@ class MutantStack : public std::stack<_Tp, _Sequence> {
 	MutantStack& operator=(const MutantStack& other) {
 		std::cout << "MutantStack copy assignment operator overload" << std::endl;
 		if (this != &other)
-			*this = other;
+			base_stack::c = other.c;
 		return *this;
 	}
 
@@ -34,27 +34,27 @@ class MutantStack : public std::stack<_Tp, _Sequence> {
 	iterator 				begin() {
 		return base_stack::c.begin();
 	};
-	const_iterator			begin() const {
-		return base_stack::c.begin();
-	}
+	// const_iterator			begin() const {
+	// 	return base_stack::c.begin();
+	// }
 	iterator				end() {
 		return base_stack::c.end();
 	}
-	const_iterator			end() const {
-		return base_stack::c.end();
-	}
+	// const_iterator			end() const {
+	// 	return base_stack::c.end();
+	// }
 	reverse_iterator		rbegin() {
 		return base_stack::c.rbegin();
 	}
-	const_reverse_iterator 	rbegin() const {
-		return base_stack::c.rbegin();
-	}
+	// const_reverse_iterator 	rbegin() const {
+	// 	return base_stack::c.rbegin();
+	// }
 	reverse_iterator		 rend() {
 		return base_stack::c.rend();
 	}
-	const_reverse_iterator 	rend() const {
-		return base_stack::c.rend();
-	}
+	// const_reverse_iterator 	rend() const {
+	// 	return base_stack::c.rend();
+	// }
 
 	void	print() {
 		std::cout << "MutantStack.print()" << std::endl;

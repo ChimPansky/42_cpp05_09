@@ -55,6 +55,8 @@ int main() {
 	{
 		std::cout << "\n---SECTION 1---" << std::endl;
 		std::cout << "simple MutantStack tests\n" << std::endl;
+
+		std::cout << "Default Constructor test:" << std::endl;
 		MutantStack<int> st1;
 
 		st1.print();
@@ -69,8 +71,15 @@ int main() {
 		st1.rprint();
 		std::cout << std::endl;
 
+		std::cout << "Copy Constructor test:" << std::endl;
 		MutantStack<int> st2 = st1;
 		st2.print();
+		std::cout << std::endl;
+
+		std::cout << "Copy assignment operator overload test:" << std::endl;
+		MutantStack<int> st3;
+		st3 = st2;
+		st3.print();
 		std::cout << std::endl;
 	}
 	{
@@ -125,16 +134,16 @@ int main() {
 
 		const MutantStack<float> st2(st1);
 
-		std::cout << "MutantStack<float> const iteration front to back:" << std::endl;
-		for (MutantStack<float>::const_iterator it = st2.begin(); it != st2.end(); it++) {
-			std::cout << *it << std::endl;
-		}
+		// std::cout << "MutantStack<float> const iteration front to back:" << std::endl;
+		// for (MutantStack<float>::const_iterator it = st2.begin(); it != st2.end(); it++) {
+		// 	std::cout << *it << std::endl;
+		// }
 
-		std::cout << "\nMutantStack<float> const iteration back to front:" << std::endl;
-		for (MutantStack<float>::const_reverse_iterator it = st2.rbegin(); it != st2.rend(); it++) {
-			std::cout << *it << std::endl;
-		}
-		std::cout << std::endl;
+		// std::cout << "\nMutantStack<float> const iteration back to front:" << std::endl;
+		// for (MutantStack<float>::const_reverse_iterator it = st2.rbegin(); it != st2.rend(); it++) {
+		// 	std::cout << *it << std::endl;
+		// }
+		// std::cout << std::endl;
 	}
 
 	// std::deque<int>::const_iterator cit = deq.end();
