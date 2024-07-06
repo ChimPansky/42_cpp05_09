@@ -47,6 +47,10 @@ void	MutantList::_mergeInsert(intList& list) {
 	_sortedChain.insert(_sortedChain.begin(), *_lowerChain.begin());
 	VERBOSE_OUT_ARGS("Sorted list: ", _printList(_sortedChain));
 	_insertLowerChain(pairs);
+	if (_hasStrayElement) {
+		VERBOSE_OUT("Inserting stray element...");
+		_binaryInsert(_sortedChain, _sortedChain.begin(), _sortedChain.end(), _lastElement);
+	}
 	intList::operator=(_sortedChain);
 	VERBOSE_OUT(size() << " elements sorted.");
 	VERBOSE_OUT("std::list Comparisons done: " << _sortComparisons);
@@ -163,10 +167,6 @@ void	MutantList::_splitPairs(const pairList& pairs) {
 	for (lPairsConstIterator cit = pairs.begin(); cit != pairs.end(); cit++) {
 		_sortedChain.push_back(cit->second);
 		_lowerChain.push_back(cit->first);
-	}
-	if (_hasStrayElement) {
-		VERBOSE_OUT("Adding stray element to end of lower chain...");
-		_lowerChain.push_back(_lastElement);
 	}
 	VERBOSE_OUT_ARGS("Sorted chain: ", _printList(_sortedChain));
 	VERBOSE_OUT_ARGS("Lower chain: ", _printList(_lowerChain));

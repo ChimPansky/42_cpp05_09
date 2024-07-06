@@ -1,13 +1,11 @@
 #pragma once
 #include <list>
-#include <ostream>
 
-typedef typename std::list<int> intList;
-typedef typename std::pair<int, int> lIntPair;
-typedef typename std::list<lIntPair> pairList;
-typedef typename pairList::iterator lPairsIterator;
-typedef typename pairList::const_iterator lPairsConstIterator;
-
+typedef std::list<int> intList;
+typedef std::pair<int, int> lIntPair;
+typedef std::list<lIntPair> pairList;
+typedef pairList::iterator lPairsIterator;
+typedef pairList::const_iterator lPairsConstIterator;
 class MutantList : public intList {
   public:
 	MutantList();
@@ -18,6 +16,7 @@ class MutantList : public intList {
 
 	void		sort();
 	void		print() const;
+
 
   private:
 	intList	_sortedChain;
@@ -43,4 +42,3 @@ class MutantList : public intList {
 	void		_printPairs(const pairList& pairs);
 
 };
-

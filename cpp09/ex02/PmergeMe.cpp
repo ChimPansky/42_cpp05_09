@@ -86,7 +86,7 @@ int main (int argc, char** args) {
 	if (processArguments(vecNumbers, listNumbers, argc, args) != Status::SUCCESS)
 		return Status::ERROR_ARGUMENTS;
 	try {
-		status = sortAndDisplay(vecNumbers, listNumbers, 30);
+		status = sortAndDisplay(vecNumbers, listNumbers, 5);
 	}
 	catch (std::exception& e) {
 		std::cout << "An Error happened: " << e.what() << std::endl;

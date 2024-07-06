@@ -47,9 +47,13 @@ void	MutantVector::_mergeInsert(intVector& vec) {
 	_sortedChain.insert(_sortedChain.begin(), _lowerChain[0]);
 	VERBOSE_OUT_ARGS("Sorted vector: ", _printVec(_sortedChain));
 	_insertLowerChain(pairs);
+	if (_hasStrayElement) {
+		VERBOSE_OUT("Inserting stray element...");
+		_binaryInsert(_sortedChain, _sortedChain.begin(), _sortedChain.end(), _lastElement);
+	}
 	intVector::operator=(_sortedChain);
 	VERBOSE_OUT(size() << " elements sorted.");
-	VERBOSE_OUT("std::vector Comparisons done: " << _sortComparisons);
+	VERBOSE_OUT("std::vector Comparisons done: " << _sortComparisons << "\n");
 }
 
 pairVector	MutantVector::_makePairs(const intVector& vec) {
@@ -120,10 +124,6 @@ void	MutantVector::_splitPairs(const pairVector& pairs) {
 	for (vPairsConstIterator cit = pairs.begin(); cit != pairs.end(); cit++) {
 		_sortedChain.push_back(cit->second);
 		_lowerChain.push_back(cit->first);
-	}
-	if (_hasStrayElement) {
-		VERBOSE_OUT("Adding stray element to end of lower chain...");
-		_lowerChain.push_back(_lastElement);
 	}
 	VERBOSE_OUT_ARGS("Sorted chain: ", _printVec(_sortedChain));
 	VERBOSE_OUT_ARGS("Lower chain: ", _printVec(_lowerChain));

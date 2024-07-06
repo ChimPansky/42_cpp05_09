@@ -11,7 +11,7 @@ BUILD_DIR = build
 
 CC = c++
 CFLAGS = -std=c++98
-CFLAGS += -MMD -g
+CFLAGS += -MMD
 CFLAGS += -Wall -Wextra -Werror
 # CFLAGS += -fsanitize=address,undefined,leak
 

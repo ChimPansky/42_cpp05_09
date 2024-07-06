@@ -1,12 +1,11 @@
 #pragma once
 #include <vector>
-#include <ostream>
 
-typedef typename std::vector<int> intVector;
-typedef typename std::pair<int, int> intPair;
-typedef typename std::vector<intPair> pairVector;
-typedef typename pairVector::iterator vPairsIterator;
-typedef typename pairVector::const_iterator vPairsConstIterator;
+typedef std::vector<int> intVector;
+typedef std::pair<int, int> intPair;
+typedef std::vector<intPair> pairVector;
+typedef pairVector::iterator vPairsIterator;
+typedef pairVector::const_iterator vPairsConstIterator;
 
 class MutantVector : public intVector {
   public:
@@ -18,6 +17,7 @@ class MutantVector : public intVector {
 
 	void		sort();
 	void		print() const;
+
 
   private:
 	intVector	_sortedChain;
