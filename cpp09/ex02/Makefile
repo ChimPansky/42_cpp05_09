@@ -16,7 +16,8 @@ CFLAGS += -Wall -Wextra -Werror
 # CFLAGS += -fsanitize=address,undefined,leak
 
 FILENAMES = PmergeMe.cpp \
-			FjVector.cpp \
+			MutantVector.cpp \
+			MutantList.cpp \
 			JacobsThal.cpp
 
 SRC = $(addprefix $(SOURCE_DIR)/, $(FILENAMES))

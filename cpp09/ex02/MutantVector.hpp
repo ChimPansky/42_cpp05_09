@@ -5,16 +5,16 @@
 typedef typename std::vector<int> intVector;
 typedef typename std::pair<int, int> intPair;
 typedef typename std::vector<intPair> pairVector;
-typedef typename pairVector::iterator pairsIterator;
-typedef typename pairVector::const_iterator pairsConstIterator;
+typedef typename pairVector::iterator vPairsIterator;
+typedef typename pairVector::const_iterator vPairsConstIterator;
 
-class FjVector : public intVector {
+class MutantVector : public intVector {
   public:
-	FjVector();
-	FjVector(const FjVector& other);
-	~FjVector();
+	MutantVector();
+	MutantVector(const MutantVector& other);
+	~MutantVector();
 
-	FjVector&	operator=(const FjVector& other);
+	MutantVector&	operator=(const MutantVector& other);
 
 	void		sort();
 	void		print() const;
@@ -30,15 +30,13 @@ class FjVector : public intVector {
 	void		_mergeInsert(intVector& vec);
 	pairVector	_makePairs(const intVector& vec);
 	void		_orderPairs(pairVector& pairs);
-	void		_mergeSortPairs(pairVector& target, pairsIterator left, pairsIterator right);
-	void		_mergePairs(pairsIterator left, pairsIterator center, pairsIterator right);
+	void		_mergeSortPairs(pairVector& target, vPairsIterator left, vPairsIterator right);
+	void		_mergePairs(vPairsIterator left, vPairsIterator center, vPairsIterator right);
 	void		_splitPairs(const pairVector& pairs);
 	void		_insertLowerChain(const pairVector& pairs);
 	void		_binaryInsert(intVector& vec, intVector::iterator left, intVector::iterator right, int val);
 
-	// helpers (to be removed):
-	inline void	_printVec(const intVector& vec) const;
-	void		_printPairs(const pairVector& pairs);
+	// helpers
+	void	_printVec(const intVector& vec) const;
+	void	_printPairs(const pairVector& pairs);
 };
-
-std::ostream& operator<<(std::ostream& lHs, const intPair& rHs);

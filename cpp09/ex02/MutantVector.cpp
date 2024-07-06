@@ -1,31 +1,31 @@
-#include "FjVector.hpp"
+#include "MutantVector.hpp"
 #include "Verbose.hpp"
 #include "JacobsThal.hpp"
 #include <algorithm>
 #include <iostream>
 #include <iterator>
 
-FjVector::FjVector() {}
+MutantVector::MutantVector() {}
 
-FjVector::FjVector(const FjVector& other)
+MutantVector::MutantVector(const MutantVector& other)
 	: intVector(other) {}
 
-FjVector::~FjVector() {}
+MutantVector::~MutantVector() {}
 
-FjVector&	FjVector::operator=(const FjVector& other) {
+MutantVector&	MutantVector::operator=(const MutantVector& other) {
 	if (this != &other)
 		intVector::operator=(other);
 	return (*this);
 }
 
-void		FjVector::print() const {
-	VERBOSE_OUT("FjVector.print():");
+void		MutantVector::print() const {
+	VERBOSE_OUT("MutantVector.print():");
 	_printVec(*this);
 	std::cout << std::endl;
 }
 
-void	FjVector::sort() {
-	VERBOSE_OUT("FjVector.sort():");
+void	MutantVector::sort() {
+	VERBOSE_OUT("MutantVector.sort():");
 	if (size() < 2)
 		return ;
 	_sortedChain.clear();
@@ -36,7 +36,7 @@ void	FjVector::sort() {
 	_mergeInsert(*this);
 }
 
-void	FjVector::_mergeInsert(intVector& vec) {
+void	MutantVector::_mergeInsert(intVector& vec) {
 	VERBOSE_OUT_ARGS("_mergeInsert", _printVec(vec));
 	pairVector	pairs = _makePairs(vec);
 	_orderPairs(pairs);
@@ -49,10 +49,10 @@ void	FjVector::_mergeInsert(intVector& vec) {
 	_insertLowerChain(pairs);
 	intVector::operator=(_sortedChain);
 	VERBOSE_OUT(size() << " elements sorted.");
-	VERBOSE_OUT("Comparisons done: " << _sortComparisons);
+	VERBOSE_OUT("std::vector Comparisons done: " << _sortComparisons);
 }
 
-pairVector	FjVector::_makePairs(const intVector& vec) {
+pairVector	MutantVector::_makePairs(const intVector& vec) {
 	VERBOSE_OUT_ARGS("_makePairs", _printVec(vec));
 	pairVector	pairs;
 	for (const_iterator cit = vec.begin(); cit != (vec.end() - vec.size() % 2); cit += 2)
@@ -63,7 +63,7 @@ pairVector	FjVector::_makePairs(const intVector& vec) {
 // this compares integers pairwise...
 // compare first and second element of each pair and order accordingly
 // { (5, 3), (1, 9), (7, 4) } --> { (3,5), (1, 9), (4, 7) }
-void	FjVector::_orderPairs(pairVector& pairs) {
+void	MutantVector::_orderPairs(pairVector& pairs) {
 	VERBOSE_OUT_ARGS("_orderPairs", _printPairs(pairs));
 	for (pairVector::iterator it = pairs.begin(); it != pairs.end(); it++) {
 		if (it->second < it->first)
@@ -79,11 +79,11 @@ void	FjVector::_orderPairs(pairVector& pairs) {
 // this compares PAIRS of integers...
 // compare larger elements of each pair and sort accordingly
 // { (3, 5), (1, 9), (4, 7) } -> { (3,5), (4, 7), (1, 9) }
-void	FjVector::_mergeSortPairs(pairVector& target, pairsIterator left, pairsIterator right) {
-	VERBOSE_OUT("_mergeSortPairs() left: " << *left << " | right: " << *right);
+void	MutantVector::_mergeSortPairs(pairVector& target, vPairsIterator left, vPairsIterator right) {
+	VERBOSE_OUT("_mergeSortPairs()");
 	if (left >= right)
 		return ;
-	pairsIterator	center;
+	vPairsIterator	center;
 	center = left + (right - left) / 2;
 	center = left + std::distance(left, right) / 2;
 	_mergeSortPairs(target, left, center);
@@ -91,12 +91,12 @@ void	FjVector::_mergeSortPairs(pairVector& target, pairsIterator left, pairsIter
 	_mergePairs(left, center, right);
 }
 
-void	FjVector::_mergePairs(pairsIterator left, pairsIterator center, pairsIterator right) {
+void	MutantVector::_mergePairs(vPairsIterator left, vPairsIterator center, vPairsIterator right) {
 	pairVector	leftPairs(left, center + 1);
 	pairVector	rightPairs(center + 1, right + 1);
-	pairsIterator	leftPos = leftPairs.begin();
-	pairsIterator	rightPos = rightPairs.begin();
-	pairsIterator	targetPos = left;
+	vPairsIterator	leftPos = leftPairs.begin();
+	vPairsIterator	rightPos = rightPairs.begin();
+	vPairsIterator	targetPos = left;
 	while (leftPos != leftPairs.end() && rightPos != rightPairs.end()) {
 		if (leftPos->second <= rightPos->second)
 			*targetPos = *leftPos++;
@@ -115,9 +115,9 @@ void	FjVector::_mergePairs(pairsIterator left, pairsIterator center, pairsIterat
 	}
 }
 
-void	FjVector::_splitPairs(const pairVector& pairs) {
+void	MutantVector::_splitPairs(const pairVector& pairs) {
 	VERBOSE_OUT("Split Pairs into upper (sorted) chain and lower chain...");
-	for (pairsConstIterator cit = pairs.begin(); cit != pairs.end(); cit++) {
+	for (vPairsConstIterator cit = pairs.begin(); cit != pairs.end(); cit++) {
 		_sortedChain.push_back(cit->second);
 		_lowerChain.push_back(cit->first);
 	}
@@ -129,7 +129,7 @@ void	FjVector::_splitPairs(const pairVector& pairs) {
 	VERBOSE_OUT_ARGS("Lower chain: ", _printVec(_lowerChain));
 }
 
-void	FjVector::_insertLowerChain(const pairVector& pairs) {
+void	MutantVector::_insertLowerChain(const pairVector& pairs) {
 	intVector::size_type	lowerIdx = 2;
 	while (lowerIdx <= _lowerChain.size()) {
 		std::pair<std::size_t, std::size_t>	jacobsthal = jacobsthal::getBounds(lowerIdx);
@@ -149,7 +149,7 @@ void	FjVector::_insertLowerChain(const pairVector& pairs) {
 	}
 }
 
-void	FjVector::_binaryInsert(intVector& vec, intVector::iterator left, intVector::iterator right, int val) {
+void	MutantVector::_binaryInsert(intVector& vec, intVector::iterator left, intVector::iterator right, int val) {
 	intVector::iterator	center;
 	int insertComparisons = 0;
 	while (left < right) {
@@ -166,7 +166,7 @@ void	FjVector::_binaryInsert(intVector& vec, intVector::iterator left, intVector
 }
 
 // helpers (just for printing steps of sorting algorithm):
-inline void	FjVector::_printVec(const intVector& vec) const {
+void	MutantVector::_printVec(const intVector& vec) const {
 	for (const_iterator cit = vec.begin(); cit != vec.end(); cit++)
 		std::cout << *cit << ((cit != vec.end() - 1) ? ", " : "") ;
 	// different ways for this derived class to iterate through the vector structure inherited
@@ -181,12 +181,7 @@ inline void	FjVector::_printVec(const intVector& vec) const {
 	// 	std::cout << *cit << std::endl;
 }
 
-void		FjVector::_printPairs(const pairVector& pairs) {
+void		MutantVector::_printPairs(const pairVector& pairs) {
 	for (pairVector::const_iterator cit = pairs.begin(); cit != pairs.end(); cit++)
-		std::cout << *cit << ((cit != pairs.end() - 1) ? ", " : "");
-}
-
-std::ostream& operator<<(std::ostream& lHs, const intPair& rHs) {
-	lHs << "(" << rHs.first << ", " << rHs.second << ")";
-	return lHs;
+		std::cout << "(" << cit->first << ", " << cit->second << ")"  << ((cit != pairs.end() - 1) ? ", " : "");
 }
