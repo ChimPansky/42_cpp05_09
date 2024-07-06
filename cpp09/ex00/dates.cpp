@@ -6,7 +6,7 @@
 /*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 22:33:13 by tkasbari          #+#    #+#             */
-/*   Updated: 2024/07/01 22:55:13 by tkasbari         ###   ########.fr       */
+/*   Updated: 2024/07/06 16:40:12 by tkasbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	validateDate(const std::string& date) {
 
 	std::stringstream ssYear(date.substr(0, 4));
 	ssYear >> year;
-	if (ssYear.fail() || year < 1900 || year > 2100)
+	if (ssYear.fail() || year < 1900 || year > 9999)
 		return false;
 
 	std::stringstream ssMonth(date.substr(5, 2));

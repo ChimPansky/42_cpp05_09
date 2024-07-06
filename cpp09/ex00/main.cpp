@@ -6,7 +6,7 @@
 /*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 22:33:20 by tkasbari          #+#    #+#             */
-/*   Updated: 2024/07/01 23:07:59 by tkasbari         ###   ########.fr       */
+/*   Updated: 2024/07/06 16:15:43 by tkasbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int ac, char** av) {
 	}
 	if (BitcoinExchange::loadInputFile(av[1]) == false)
 		return 1;
-	std::string	csvPath = "ressources/data.csv";
+	std::string	csvPath = "data.csv";
 	std::cout << "loading data from " << csvPath << "..." << std::endl;
 	BitcoinExchange::loadDatabaseFromCSV(csvPath.data());
 	if (BitcoinExchange::fail())

@@ -6,7 +6,7 @@
 /*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 22:32:59 by tkasbari          #+#    #+#             */
-/*   Updated: 2024/07/01 23:10:18 by tkasbari         ###   ########.fr       */
+/*   Updated: 2024/07/06 17:26:07 by tkasbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ std::ifstream	BitcoinExchange::_inFile;
 bool			BitcoinExchange::_fail = false;
 
 // public methods:
+// TODO: move filechecks to separate function
 void	BitcoinExchange::loadDatabaseFromCSV(const char* fPath) {
 	_resetExchange();
 	std::ifstream	inFile(fPath);
@@ -29,6 +30,14 @@ void	BitcoinExchange::loadDatabaseFromCSV(const char* fPath) {
 		_fail = true;
 		return ;
 	}
+	char c;
+	if (!(_inFile >> c)) {
+		std::cerr << "Error: cannot read from file: " << fPath << std::endl;
+		_fail = true;
+		return ;
+	}
+	_inFile.clear();
+	_inFile.seekg(0, std::ios::beg);
 	std::string	line;
 	std::getline(inFile, line);
 	while (std::getline(inFile, line) && !_fail)
@@ -36,15 +45,24 @@ void	BitcoinExchange::loadDatabaseFromCSV(const char* fPath) {
 	if (_map.empty()) {
 		std::cerr << "Error: empty database file: " << fPath << std::endl;
 		_fail = true;
+		return ;
 	}
+	std::cout << "Data has been loaded successfully!" << std::endl;
 }
 
 bool	BitcoinExchange::loadInputFile(const char *fPath) {
 	_inFile.open(fPath);
-	if (!_inFile.is_open()) {
+	if (_inFile.fail() || !_inFile.is_open()) {
 		std::cerr << "Error: cannot open input file: " << fPath << std::endl;
 		return false;
 	}
+	char c;
+	if (!(_inFile >> c)) {
+		std::cerr << "Error: cannot read from file: " << fPath << std::endl;
+		return false;
+	}
+	_inFile.clear();
+	_inFile.seekg(0, std::ios::beg);
 	return true;
 }
 
