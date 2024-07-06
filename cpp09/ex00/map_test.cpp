@@ -6,7 +6,7 @@
 /*   By: tkasbari <thomas.kasbarian@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 22:33:25 by tkasbari          #+#    #+#             */
-/*   Updated: 2024/07/01 22:33:26 by tkasbari         ###   ########.fr       */
+/*   Updated: 2024/07/06 12:27:56 by tkasbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	validateDay(int year, int month, int day) {
 	return true;
 }
 
-bool	validateDate(const std::string& date) {	//Todo: add proper date check...
+bool	validateDate(const std::string& date) {
 	std::string			datePart;
 	int	year, month, day;
 
