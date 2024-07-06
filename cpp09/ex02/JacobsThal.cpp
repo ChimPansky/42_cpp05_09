@@ -7,5 +7,5 @@ std::pair<std::size_t, std::size_t>	jacobsthal::getBounds(std::size_t val) {
 		if (val < SEQUENCE[i])
 			return std::make_pair(SEQUENCE[i - 1], SEQUENCE[i]);
 	}
-	return std::make_pair(SEQUENCE[COUNT - 1], SEQUENCE[COUNT]);
+	return std::make_pair(SEQUENCE[COUNT - 2], SEQUENCE[COUNT - 1]);
 }

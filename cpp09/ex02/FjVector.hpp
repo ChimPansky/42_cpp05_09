@@ -20,8 +20,8 @@ class FjVector : public intVector {
 	void		print() const;
 
   private:
-	intVector	_sorted;
-	intVector	_lower;
+	intVector	_sortedChain;
+	intVector	_lowerChain;
 	bool		_hasStrayElement;
 	int			_lastElement;
 	int			_sortComparisons;
@@ -32,8 +32,8 @@ class FjVector : public intVector {
 	void		_orderPairs(pairVector& pairs);
 	void		_mergeSortPairs(pairVector& target, pairsIterator left, pairsIterator right);
 	void		_mergePairs(pairsIterator left, pairsIterator center, pairsIterator right);
-	void		_insertLargerElements(const pairVector& pairs);
-	void		_insertSmallerElements(pairVector& pairs);
+	void		_splitPairs(const pairVector& pairs);
+	void		_insertLowerChain(const pairVector& pairs);
 	void		_binaryInsert(intVector& vec, intVector::iterator left, intVector::iterator right, int val);
 
 	// helpers (to be removed):

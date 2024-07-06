@@ -1,8 +1,8 @@
 #pragma once
 #include <utility>
 
+// jacob[n] = jacob[n-2] * 2 + jacob[n-1]
 namespace jacobsthal {
-	// jacob[n] = jacob[n-2] * 2 + jacob[n-1]
 	static const std::size_t	COUNT = 33;
 	static const std::size_t	SEQUENCE[COUNT] = {
 	0,		  1,		  1, 		3, 		 5, 		11, 	   21,
