@@ -47,6 +47,7 @@ void	MutantVector::_mergeInsert(intVector& vec) {
 	_sortedChain.insert(_sortedChain.begin(), _lowerChain[0]);
 	VERBOSE_OUT_ARGS("Sorted vector: ", _printVec(_sortedChain));
 	_insertLowerChain(pairs);
+	// not sure if stay element should be inserted at the very last or as part of lowerChain...
 	if (_hasStrayElement) {
 		VERBOSE_OUT("Inserting stray element...");
 		_binaryInsert(_sortedChain, _sortedChain.begin(), _sortedChain.end(), _lastElement);
@@ -130,14 +131,14 @@ void	MutantVector::_splitPairs(const pairVector& pairs) {
 }
 
 void	MutantVector::_insertLowerChain(const pairVector& pairs) {
-	intVector::size_type	lowerIdx = 2;
+	size_type	lowerIdx = 2;
 	while (lowerIdx <= _lowerChain.size()) {
 		std::pair<std::size_t, std::size_t>	jacobsthal = jacobsthal::getBounds(lowerIdx);
 		VERBOSE_OUT("Jacobsthal bounds: (" << jacobsthal.first << "/" << jacobsthal.second << ")");
 		lowerIdx = std::min(_lowerChain.size(), jacobsthal.second);
 		while (lowerIdx > jacobsthal.first) {
-			intVector::iterator	left = _sortedChain.begin();
-			intVector::iterator	right = std::find(_sortedChain.begin(), _sortedChain.end(), (pairs.begin() + lowerIdx - 1)->second);
+			iterator	left = _sortedChain.begin();
+			iterator	right = std::find(_sortedChain.begin(), _sortedChain.end(), (pairs.begin() + lowerIdx - 1)->second);
 			int insertVal = _lowerChain[lowerIdx - 1];
 			VERBOSE_OUT("Pairnumber " << lowerIdx << ": Binary inserting smaller element in range "
 				<< left - _sortedChain.begin() + 1 << "/" << right - _sortedChain.begin() + 1);
@@ -149,8 +150,8 @@ void	MutantVector::_insertLowerChain(const pairVector& pairs) {
 	}
 }
 
-void	MutantVector::_binaryInsert(intVector& vec, intVector::iterator left, intVector::iterator right, int val) {
-	intVector::iterator	center;
+void	MutantVector::_binaryInsert(intVector& vec, intVector::iterator left, iterator right, int val) {
+	iterator	center;
 	int insertComparisons = 0;
 	while (left < right) {
 		center = left + (right - left) / 2;
@@ -169,7 +170,7 @@ void	MutantVector::_binaryInsert(intVector& vec, intVector::iterator left, intVe
 void	MutantVector::_printVec(const intVector& vec) const {
 	for (const_iterator cit = vec.begin(); cit != vec.end(); cit++)
 		std::cout << *cit << ((cit != vec.end() - 1) ? ", " : "") ;
-	// different ways for this derived class to iterate through the vector structure inherited
+	// different ways for this derived class to iterate through the vector structure inherited:
 	// from base class intVector (aka std::vector<int>):
 	// for (size_type i = 0; i < size(); i++) {
 	// 	std::cout << (*this)[i] << std::endl;

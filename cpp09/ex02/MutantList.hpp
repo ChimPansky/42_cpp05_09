@@ -33,9 +33,9 @@ class MutantList : public intList {
 	pairList	_mergePairs(pairList& left, pairList& right);
 	void		_splitPairs(const pairList& pairs);
 	void		_insertLowerChain(const pairList& pairs);
-	void		_binaryInsert(intList& list, iterator left, intList::iterator right, int val);
-	intList::iterator	_getRightBoundFromPairs(const pairList& pairs, intList::size_type index);
-	intList::iterator	_getIteratorAt(intList& list, intList::size_type index);
+	void		_binaryInsert(intList& list, iterator left, iterator right, int val);
+	intList::iterator	_getRightBoundFromPairs(const pairList& pairs, size_type index);
+	intList::iterator	_getIteratorAt(intList& list, size_type index);
 
 	// helpers
 	void		_printList(const intList& list) const;

@@ -34,7 +34,7 @@ class MutantVector : public intVector {
 	void		_mergePairs(vPairsIterator left, vPairsIterator center, vPairsIterator right);
 	void		_splitPairs(const pairVector& pairs);
 	void		_insertLowerChain(const pairVector& pairs);
-	void		_binaryInsert(intVector& vec, intVector::iterator left, intVector::iterator right, int val);
+	void		_binaryInsert(intVector& vec, iterator left, iterator right, int val);
 
 	// helpers
 	void	_printVec(const intVector& vec) const;

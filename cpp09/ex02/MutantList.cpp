@@ -88,47 +88,6 @@ void	MutantList::_orderPairs(pairList& pairs) {
 // this compares PAIRS of integers...
 // compare larger elements of each pair and sort accordingly
 // { (3, 5), (1, 9), (4, 7) } -> { (3,5), (4, 7), (1, 9) }
-// void	MutantList::_mergeSortPairs2(pairList& target, lPairsIterator left, lPairsIterator right) {
-// 	VERBOSE_OUT("_mergeSortPairs() left: " << *left << " | right: " << *right);
-
-// 	if (left >= right)
-// 		return ;
-// 	lPairsIterator	center;
-// 	center = left + (right - left) / 2;
-// 	center = left + std::distance(left, right) / 2;
-// 	_mergeSortPairs(target, left, center);
-// 	_mergeSortPairs(target, center + 1, right);
-// 	_mergePairs(left, center, right);
-// }
-
-// void	MutantList::_mergePairs2(lPairsIterator left, lPairsIterator center, lPairsIterator right) {
-// 	pairList	leftPairs(left, center + 1);
-// 	pairList	rightPairs(center + 1, right + 1);
-// 	lPairsIterator	leftPos = leftPairs.begin();
-// 	lPairsIterator	rightPos = rightPairs.begin();
-// 	lPairsIterator	targetPos = left;
-// 	while (leftPos != leftPairs.end() && rightPos != rightPairs.end()) {
-// 		if (leftPos->second <= rightPos->second)
-// 			*targetPos = *leftPos++;
-// 		else
-// 			*targetPos = *rightPos++;
-// 		targetPos++;
-// 		_sortComparisons++;
-// 	}
-// 	while (leftPos != leftPairs.end()) {
-// 		*targetPos = *leftPos++;
-// 		targetPos++;
-// 	}
-// 	while (rightPos != rightPairs.end()) {
-// 		*targetPos = *rightPos++;
-// 		targetPos++;
-// 	}
-// }
-
-
-// this compares PAIRS of integers...
-// compare larger elements of each pair and sort accordingly
-// { (3, 5), (1, 9), (4, 7) } -> { (3,5), (4, 7), (1, 9) }
 pairList MutantList::_mergeSortPairs(pairList& pairs) {
 	if (pairs.size() <= 1)
 		return pairs;
@@ -172,23 +131,23 @@ void	MutantList::_splitPairs(const pairList& pairs) {
 	VERBOSE_OUT_ARGS("Lower chain: ", _printList(_lowerChain));
 }
 
-intList::iterator	MutantList::_getRightBoundFromPairs(const pairList& pairs, intList::size_type index) {
+intList::iterator	MutantList::_getRightBoundFromPairs(const pairList& pairs, size_type index) {
 	if (index >= pairs.size())
 		return _sortedChain.end();
 	lPairsConstIterator	pairIt = pairs.begin();
 	std::advance(pairIt, index);
-	intList::iterator	rightBound = std::find(_sortedChain.begin(), _sortedChain.end(), pairIt->second);
+	iterator	rightBound = std::find(_sortedChain.begin(), _sortedChain.end(), pairIt->second);
 	return rightBound;
 }
 
-intList::iterator	MutantList::_getIteratorAt(intList& list, intList::size_type index) {
-	intList::iterator	it = list.begin();
+intList::iterator	MutantList::_getIteratorAt(intList& list, size_type index) {
+	iterator	it = list.begin();
 	std::advance(it, index);
 	return (it);
 }
 
 void	MutantList::_insertLowerChain(const pairList& pairs) {
-	intList::size_type	lowerIdx = 2;
+	size_type	lowerIdx = 2;
 	while (lowerIdx <= _lowerChain.size()) {
 		std::pair<std::size_t, std::size_t>	jacobsthal = jacobsthal::getBounds(lowerIdx);
 		VERBOSE_OUT("Jacobsthal bounds: (" << jacobsthal.first << "/" << jacobsthal.second << ")");
@@ -206,10 +165,10 @@ void	MutantList::_insertLowerChain(const pairList& pairs) {
 	}
 }
 
-void	MutantList::_binaryInsert(intList& list, intList::iterator left, intList::iterator right, int val) {
+void	MutantList::_binaryInsert(intList& list, iterator left, iterator right, int val) {
 	int insertComparisons = 0;
 	while (left != right) {
-		intList::iterator	center = left;
+		iterator	center = left;
 		std::advance(center, std::distance(left, right) / 2);
 		if (*center < val) {
 			left = center;
