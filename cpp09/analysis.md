@@ -76,7 +76,7 @@ example: (4, 3, 7, 43, 0, 20, 77, 50, 1)
   (3, 0, 7, 50)
 
 7) insert the first of the lower elements at the beginning of the sorted list:
-  (3, 4, 20, 43, 77)
+  (3, 4, 20, 43, 77)   
 
 8) insert the rest of the lower elements using binary insert:
       insert them in a specific order       (first the third element, then the 2nd element, then the 5th element, then the 4th, then the 11th, then the 10th,...) 
