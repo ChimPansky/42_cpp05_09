@@ -62,27 +62,37 @@ example: (4, 3, 7, 43, 0, 20, 77, 50, 1)
 1) make pairs from left to right (if uneven n then, just leave last element out):
    
   [(4,3) (7,43) (0,20) (77,50)]  | 1
+  
 3) order the pairs internally:
    
   -> [(3,4) (7,43) (0,20) (50,77)] 
+  
 4) order pairs by their larger element using mergesort:
 
 [(3,4) (0,20) (7,43) (50,77)]
-- take the larger elements of each pair and put them into a sorted list (this will already be sorted):
+
+5) take the larger elements of each pair and put them into a sorted list (this will already be sorted):
   (4, 20, 43, 77)
-- the lower (unsorted) elements are:
+
+6) the lower (unsorted) elements are:
   (3, 0, 7, 50)
-- insert the first of the lower elements at the beginning of the sorted list:
+
+7) insert the first of the lower elements at the beginning of the sorted list:
   (3, 4, 20, 43, 77)
-- insert the rest of the lower elements ( using binary insert. insert them in a specific order (first the third element, then the 2nd element, then the 5th element, then the 4th, then the 11th, then the 10th,...)
+
+8) insert the rest of the lower elements ( using binary insert. insert them in a specific order (first the third element, then the 2nd element, then the 5th element, then the 4th, then the 11th, then the 10th,...)
+   
   this order is called the Jacobsthal-Sequence: J(0) = 0; J(1) = 1; J(n) = J(n-2)*2 + J(n-1) | 0, 1 , 1, 3, 5, 11, 21, 43, 85,...
+  
   when using binary insert look up what position in the sorted list the upper element of the to be inserted lower element currently occupies and take this position as a right bound for the binary insert:
   that means: binary insert value 7 (it's upper value is 43) into the sorted list using left position 0 and right position 3 (index of 43); so binaryInsert(leftInd: 0, rightInd: 3, val:7);
   we get:
   -> (3, 4, 7, 20, 43, 77) (Jacobsthal says: lower element at pos 3: 7)
   -> (0, 3, 4, 7, 20, 43, 77) (Jacobsthal says: lower element at pos 2: 0)
   -> (0, 3, 4, 7, 20, 43, 50, 77) (Jacobsthal says: lower element at pos 5, but we only have 4 lower elements, so take pos 4: 50)
-- lastly: if n was uneven, binary insert the last element (here: binaryInsert(leftInd: 0, rightInd:7, val:1);
+  
+9) lastly: if n was uneven, binary insert the last element (here: binaryInsert(leftInd: 0, rightInd:7, val:1);
+
   -> (0, 1, 3, 4, 7, 20, 43, 50, 77)
 
 unused containers in this module:
