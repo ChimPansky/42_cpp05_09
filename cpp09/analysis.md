@@ -57,11 +57,12 @@ Input: "" --> END condition reached
 - **Vector Description:** Dynamic array, provides random access to elements, and allows efficient insertion and deletion at the end.
 - **List Description:** Doubly-linked list, allows fast insertion and deletion from anywhere in the sequence.
 
-- *Ford Johnson Algorithm aka merge-insertion-algorithm to sort n elements:
-- example: (4, 3, 7, 43, 0, 20, 77, 50, 1)
-- make pairs from left to right (if uneven n then, just leave last element out):
+#Ford Johnson Algorithm aka merge-insertion-algorithm to sort n elements:
+example: (4, 3, 7, 43, 0, 20, 77, 50, 1)
+1) make pairs from left to right (if uneven n then, just leave last element out):
   -> [(4,3) (7,43) (0,20) (77,50)]  | 1
-- order the pairs internally:
+2) order the pairs internally:
+   
   -> [(3,4) (7,43) (0,20) (50,77)] 
 - order pairs by their larger element using mergesort:
   -> [(3,4) (0,20) (7,43) (50,77)]
